@@ -1,0 +1,51 @@
+$breakpoint-xs ?= 575px
+$breakpoint-sm ?= 767px
+$breakpoint-md ?= 991px
+$breakpoint-lg ?= 1199px
+// app global css
+.header-icon
+  height 38px
+  width 35px
+  margin auto
+.header-list-icon
+  height 40px
+  width 28%
+  margin auto
+.q-item-link:hover
+  background goldenrod
+  color white
+  .q-item-icon
+    color white
+.card-padding
+  padding 16px
+input
+  padding 8px
+  border-radius 4px
+  border solid 0.8px #cecece
+  width 100%
+textarea
+  padding 8px
+  border-radius 4px
+  border-color #cecece
+  height 100px
+  width 100%
+select
+  height 36px
+  border-radius 4px
+  background-color #fff
+  border-color #cecece
+  width 100%
+.form-group
+  .field-input
+    margin-top -15px
+    .q-field-bottom
+      border 0
+.w-full
+  width 100%
+.row
+  .col-padding
+    padding 0 16px 8px 0
+    margin-bottom 8px
+    @media (max-width $breakpoint-md)
+      padding 0 0 8px 0
+      width 100%
