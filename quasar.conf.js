@@ -64,7 +64,19 @@ module.exports = function (ctx) {
         'QCardSeparator',
         'QCardActions',
         'QScrollArea',
-        'Screen'
+        'Screen',
+
+        // data table
+        'QTable',
+
+        // pick only what you are using from:
+        'QTh',
+        'QTr',
+        'QTd',
+        'QTableColumns',
+        'QPopupEdit',
+        'QSearch',
+        'QTooltip'
       ],
       directives: [
         'Ripple'

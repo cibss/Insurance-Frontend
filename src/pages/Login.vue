@@ -101,6 +101,7 @@ export default {
         var data = response.data
 
         if (data.success) {
+          // console.log(data.data.Token)
           this.$q.notify({
             message: data.message,
             timeout: 2000,
@@ -108,6 +109,7 @@ export default {
             color: 'positive'
           })
           localStorage.setItem('user', JSON.stringify(data.data))
+          localStorage.setItem('authorization', JSON.stringify(data.data.Token))
           this.$router.push('/')
         } else {
           this.error.username = data.message

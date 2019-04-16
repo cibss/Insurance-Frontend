@@ -41,9 +41,9 @@
         <q-item-side icon="person" class="sidebar-icon" />
         <q-item-main label="My Profile" />
       </q-item>
-      <q-item to="/ListTeam">
+      <q-item to="/agen">
         <q-item-side icon="people" class="sidebar-icon" />
-        <q-item-main label="My Team" />
+        <q-item-main label="Agen" />
       </q-item>
       <q-item to="/ListChat">
         <q-item-side icon="chat" class="sidebar-icon" />
@@ -82,7 +82,14 @@ export default {
   },
   methods: {
     logout () {
-      this.$router.push('/login')
+      localStorage.clear()
+      this.$router.replace({
+        path: '/login'
+      })
+      this.$q.notify({
+        color: 'blue',
+        message: 'Anda berhasil Keluar'
+      })
     }
   }
 }
