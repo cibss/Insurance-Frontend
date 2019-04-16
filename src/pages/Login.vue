@@ -81,9 +81,15 @@ export default {
       loading: false
     }
   },
+  created () {
+    if (localStorage.getItem('user') != null) {
+      this.$router.replace({
+        path: '/'
+      })
+    }
+  },
   methods: {
     doLogin () {
-      this.$router.push('/')
       var bodyLogin = new FormData()
       bodyLogin.set('email_username', this.user.username)
       bodyLogin.set('password', this.user.password)

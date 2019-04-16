@@ -1,5 +1,6 @@
 
 const routes = [
+  { path: '/login', component: () => import('pages/Login.vue') },
   {
     path: '/',
     component: () => import('layouts/Main.vue'),
@@ -7,8 +8,7 @@ const routes = [
       { path: '/base', component: () => import('pages/Base.vue') },
       { path: '', component: () => import('pages/Dashboard.vue') }
     ]
-  },
-  { path: '/login', component: () => import('pages/Login.vue') }
+  }
 ]
 
 // Always leave this as last one
