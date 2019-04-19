@@ -29,7 +29,10 @@ module.exports = function (ctx) {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /node_modules/
+          exclude: /node_modules/,
+          options : {
+            fix : true
+          }
         })
       }
     },
@@ -65,6 +68,7 @@ module.exports = function (ctx) {
         'QCardActions',
         'QScrollArea',
         'Screen',
+        'QUploader',
 
         // data table
         'QTable',

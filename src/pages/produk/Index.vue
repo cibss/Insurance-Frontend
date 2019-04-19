@@ -1,9 +1,9 @@
 <template>
   <div inline class="w-full">
     <q-card-title>
-      Daftar Agen Privilege Club
+      Daftar Produk Privilege Club
       <div slot="right">
-        <q-btn color="primary" label="Tambah Agen Baru" @click="$router.push('/agen/new')"/>
+        <q-btn color="primary" label="Tambah Produk Baru" @click="$router.push('/product/new')"/>
       </div>
     </q-card-title>
     <q-card-main>
@@ -17,7 +17,7 @@
       row-key="name"
       rows-per-page-label="Data per halaman"
       no-data-label="Tidak terdapat data"
-      no-results-label="Agen tidak ditemukan"
+      no-results-label="Produk tidak ditemukan"
       loading-label="Memuat"
       class="bg-white"
     >
@@ -25,17 +25,14 @@
         <!-- <q-td key="id" :props="props">
           <span>{{ props.row.id }}</span>
         </q-td> -->
-        <q-td key="username" :props="props">
-          <span>{{ props.row.username }}</span>
+        <q-td key="brand" :props="props">
+          <img style="max-width: 80px" :src="'http://'+props.row.logo.url">
         </q-td>
-        <q-td key="first_name" :props="props">
-          <span>{{ props.row.first_name }}</span>
+        <q-td key="name" :props="props">
+          <span>{{ props.row.name }}</span>
         </q-td>
-        <q-td key="last_name" :props="props">
-          <span>{{ props.row.last_name }}</span>
-        </q-td>
-        <q-td key="address" :props="props">
-          <span>{{ props.row.address }}</span>
+        <q-td key="file" :props="props">
+          <q-btn v-if="props.row.pdf.url !== ''" size="sm" round dense color="positive" icon="attachment" @click="openURL(props.row.pdf.url)" />
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
@@ -65,36 +62,28 @@ export default {
       tableData: [],
       columns: [
         {
-          name: 'username',
+          name: 'brand',
           required: true,
-          label: 'Username',
+          label: 'Brand',
           align: 'left',
-          field: 'username',
+          field: 'logo',
           sortable: true
         },
         {
-          name: 'first_name',
+          name: 'name',
           required: true,
-          label: 'First Name',
+          label: 'Name',
           align: 'left',
-          field: 'first_name',
+          field: 'name',
           sortable: true
         },
         {
-          name: 'last_name',
+          name: 'file',
           required: true,
-          label: 'Last Name',
+          label: 'Document',
           align: 'left',
-          field: 'last_name',
+          field: 'pdf',
           sortable: true
-        },
-        {
-          name: 'address',
-          required: true,
-          label: 'Alamat',
-          align: 'left',
-          field: 'address',
-          sortable: false
         },
         {
           name: 'action',
@@ -125,13 +114,14 @@ export default {
   methods: {
     fetchData () {
       this.loading = true
-      this.$axios.get('/admin/agen', {
+      this.$axios.get('/admin/product', {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }
       }).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data
+          console.log(this.tableData)
         } else {
           this.$q.notify({
             message: res.data.message,
@@ -141,9 +131,17 @@ export default {
           })
         }
       }).catch(error => {
-        console.log(error.response)
+        this.$q.notify({
+          message: error.response.data.message,
+          timeout: 2000,
+          // Available values: 'positive', 'negative', 'warning', 'info'
+          color: 'negative'
+        })
       })
       this.loading = false
+    },
+    openURL (url) {
+      window.open('http://' + url)
     }
   }
 }

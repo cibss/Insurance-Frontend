@@ -33,13 +33,13 @@
       </div>
       <!-- QScrollArea is optional -->
       <!-- Content here -->
-      <q-item to="/">
+      <q-item to="/dashboard">
         <q-item-side icon="home" class="sidebar-icon" />
         <q-item-main label="Dashboard" />
       </q-item>
-      <q-item to="/profile">
-        <q-item-side icon="person" class="sidebar-icon" />
-        <q-item-main label="My Profile" />
+      <q-item to="/product">
+        <q-item-side icon="assessment" class="sidebar-icon" />
+        <q-item-main label="Produk" />
       </q-item>
       <q-item to="/agen">
         <q-item-side icon="people" class="sidebar-icon" />

@@ -84,7 +84,7 @@ export default {
   created () {
     if (localStorage.getItem('user') != null) {
       this.$router.replace({
-        path: '/'
+        path: '/dashboard'
       })
     }
   },
