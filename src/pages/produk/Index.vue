@@ -121,7 +121,6 @@ export default {
       }).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data
-          console.log(this.tableData)
         } else {
           this.$q.notify({
             message: res.data.message,
