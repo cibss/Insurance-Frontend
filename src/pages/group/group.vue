@@ -1,5 +1,5 @@
 <template>
-  <q-card inline class="w-full">
+  <div inline class="w-full">
     <q-card-title>
       Daftar Group
       <div slot="right">
@@ -48,7 +48,7 @@
       </q-tr>
     </q-table>
     </q-card-main>
-  </q-card>
+  </div>
 
 </template>
 
