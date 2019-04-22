@@ -27,8 +27,8 @@
         </div>
         <div style="padding: 16px;">
           <img class="sidebar-profile-picture" src="~assets/PCid_logos/prvlg_clb_l01.png">
-          <p style="color: black;padding-top:8px;font-weight:bold; margin-bottom:0px;">ADMIN</p>
-          <p style="color:goldenrod; font-size:13px; font-weight:bold;">email</p>
+          <p style="color: black;padding-top:8px;font-weight:bold; margin-bottom:0px;">{{user.Username}}</p>
+          <p style="color:goldenrod; font-size:13px; font-weight:bold;">{{user.Email}}</p>
         </div>
       </div>
       <!-- QScrollArea is optional -->
@@ -75,9 +75,19 @@ colors.setBrand('secondary', '#ccc')
 
 export default {
   name: 'MyLayout',
+  created () {
+    if (localStorage.getItem('user') == null) {
+      this.$router.replace({
+        path: '/login'
+      })
+    } else {
+      this.user = JSON.parse(localStorage.getItem('user'))
+    }
+  },
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: true,
+      user: {}
     }
   },
   methods: {

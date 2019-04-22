@@ -110,7 +110,7 @@ export default {
           })
           localStorage.setItem('user', JSON.stringify(data.data))
           localStorage.setItem('authorization', JSON.stringify(data.data.Token))
-          this.$router.push('/')
+          this.$router.push('/dashboard')
         } else {
           this.error.username = data.message
         }
