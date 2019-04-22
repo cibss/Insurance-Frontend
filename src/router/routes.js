@@ -7,7 +7,8 @@ const routes = [
     children: [
       { path: '/base', component: () => import('pages/Base.vue') },
       { path: '/agen', component: () => import('pages/agen/Index.vue') },
-      { path: '', component: () => import('pages/Dashboard.vue') }
+      { path: '', component: () => import('pages/Dashboard.vue') },
+      { path: '/product', component: () => import('pages/product/product_package.vue') }
     ]
   }
 ]
