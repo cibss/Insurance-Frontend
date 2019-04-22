@@ -125,7 +125,7 @@ export default {
   methods: {
     fetchData () {
       this.loading = true
-      this.$axios.get('/admin/agen', {
+      this.$axios.get('/admin/agen?status=0', {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }
