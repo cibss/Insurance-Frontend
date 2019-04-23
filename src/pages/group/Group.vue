@@ -6,7 +6,6 @@
         <q-btn color="primary" label="Tambah Group Baru" />
       </div>
     </q-card-title>
-    <q-card-separator />
     <q-card-main>
       <q-table
       :data="tableData"

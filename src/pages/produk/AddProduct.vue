@@ -82,7 +82,7 @@ export default {
       bodyForm.append('logo', this.product.logo)
       bodyForm.append('pdf', this.product.pdf)
 
-      this.$axios.put('/admin/create/product', bodyForm, {
+      this.$axios.post('/admin/create/product', bodyForm, {
         headers: {
           Authorization: JSON.parse(localStorage.getItem('token-access'))
         }
@@ -100,7 +100,7 @@ export default {
         .catch(error => {
           console.log(error.response)
           this.$q.notify({
-            message: error.response.data.message,
+            message: error.message,
             timeout: 2000,
             // Available values: 'positive', 'negative', 'warning', 'info'
             color: 'negative'
