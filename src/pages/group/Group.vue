@@ -3,7 +3,7 @@
     <q-card-title>
       Daftar Group
       <div slot="right">
-        <q-btn color="primary" label="Tambah Group Baru" />
+        <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
       </div>
     </q-card-title>
     <q-card-main>
@@ -39,9 +39,7 @@
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
-          <q-btn v-if="props.row.status === 0" size="sm" round dense color="positive" icon="payment" @click="$router.push('/main/sales/detail/'+props.row.id)">
-          </q-btn>
-          <q-btn v-if="props.row.status === 1 || props.row.status === 2" size="sm" round dense color="secondary" icon="receipt" @click="$router.push('/main/sales/detail/'+props.row.id)">
+          <q-btn size="sm" round dense color="positive" icon="payment" @click="$router.push('/group/detail/'+props.row.id)">
           </q-btn>
         </q-td>
       </q-tr>
@@ -105,6 +103,14 @@ export default {
           name: 'status',
           required: true,
           label: 'Status',
+          align: 'left',
+          field: 'status',
+          sortable: false
+        },
+        {
+          name: 'action',
+          required: true,
+          label: 'Action',
           align: 'left',
           field: 'status',
           sortable: false
