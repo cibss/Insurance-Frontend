@@ -45,6 +45,10 @@
         <q-item-side icon="people" class="sidebar-icon" />
         <q-item-main label="Agen" />
       </q-item>
+      <q-item to="/group">
+        <q-item-side icon="alarm" class="sidebar-icon" />
+        <q-item-main label="Group" />
+      </q-item>
       <q-item to="/ListChat">
         <q-item-side icon="chat" class="sidebar-icon" />
         <q-item-main label="Chat" />
