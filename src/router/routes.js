@@ -12,7 +12,8 @@ const routes = [
       { path: '/group', component: () => import('pages/group/group.vue') },
       { path: '/agen/new', component: () => import('pages/agen/addAgen.vue') },
       { path: '/product', component: () => import('pages/produk/Index.vue') },
-      { path: '/product/new', component: () => import('pages/produk/addProduct.vue') }
+      { path: '/product/new', component: () => import('pages/produk/addProduct.vue') },
+      { path: '/group/new', component: () => import('pages/group/addGroup.vue') }
 
     ]
   }

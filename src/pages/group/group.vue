@@ -3,7 +3,7 @@
     <q-card-title>
       Daftar Group
       <div slot="right">
-        <q-btn color="primary" label="Tambah Group Baru" />
+        <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
       </div>
     </q-card-title>
     <q-card-separator />
