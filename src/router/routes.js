@@ -13,7 +13,8 @@ const routes = [
       { path: '/agen/new', component: () => import('pages/agen/AddAgen.vue') },
       { path: '/product', component: () => import('pages/product/product.vue') },
       { path: '/product/new', component: () => import('pages/product/AddProduct.vue') },
-      { path: '/product/package', component: () => import('pages/product/product_package.vue') }
+      { path: '/product/package', component: () => import('pages/product/product_package.vue') },
+      { path: '/product/detail/:id', component: () => import('pages/product/detailProduct.vue') }
     ]
   }
 ]
