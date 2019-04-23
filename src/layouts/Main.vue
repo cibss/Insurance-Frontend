@@ -49,10 +49,6 @@
         <q-item-side icon="chat" class="sidebar-icon" />
         <q-item-main label="Chat" />
       </q-item>
-      <q-item to="/product">
-        <q-item-side icon="" class="sidebar-icon" />
-        <q-item-main label="Product" />
-      </q-item>
       <q-item to="/Setting">
         <q-item-side icon="settings" class="sidebar-icon" />
         <q-item-main label="Setting" />
