@@ -1,7 +1,7 @@
 <template>
   <div inline class="w-full">
     <q-card-title>
-      Daftar Produk Privilege Club
+      Daftar Produk
       <div slot="right">
         <q-btn color="primary" label="Tambah Produk Baru" @click="$router.push('/product/new')"/>
       </div>
@@ -33,6 +33,9 @@
         </q-td>
         <q-td key="file" :props="props">
           <q-btn v-if="props.row.pdf.url !== ''" size="sm" round dense color="positive" icon="attachment" @click="openURL(props.row.pdf.url)" />
+        </q-td>
+        <q-td key="status" :status="props">
+          <span>{{ props.row.status }}</span>
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
@@ -83,6 +86,14 @@ export default {
           label: 'Document',
           align: 'left',
           field: 'pdf',
+          sortable: true
+        },
+        {
+          name: 'status',
+          required: true,
+          label: 'Status',
+          align: 'left',
+          field: 'status',
           sortable: true
         },
         {

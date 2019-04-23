@@ -1,7 +1,7 @@
 <template>
   <div inline class="w-full">
     <q-card-title>
-      Daftar Agen Privilege Club
+      Daftar Agen
       <div slot="right">
         <q-btn color="primary" label="Tambah Agen Baru" @click="$router.push('/agen/new')"/>
       </div>
