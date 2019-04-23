@@ -49,11 +49,11 @@
         <q-item-side icon="alarm" class="sidebar-icon" />
         <q-item-main label="Group" />
       </q-item>
-      <q-item to="/ListChat">
+      <q-item to="/chat">
         <q-item-side icon="chat" class="sidebar-icon" />
         <q-item-main label="Chat" />
       </q-item>
-      <q-item to="/Setting">
+      <q-item to="/setting">
         <q-item-side icon="settings" class="sidebar-icon" />
         <q-item-main label="Setting" />
       </q-item>

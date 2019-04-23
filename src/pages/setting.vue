@@ -1,6 +1,6 @@
 <template>
   <q-p>
-    Dashboard Page (on progress)
+    Setting Page (on progress)
   </q-p>
 </template>
 
