@@ -16,7 +16,8 @@ const routes = [
       { path: '/group/detail/:id', component: () => import('pages/group/detailGroup.vue') },
       { path: '/product', component: () => import('pages/product/product.vue') },
       { path: '/product/new', component: () => import('pages/product/AddProduct.vue') },
-      { path: '/product/package', component: () => import('pages/product/product_package.vue') }
+      { path: '/product/package', component: () => import('pages/product/product_package.vue') },
+      { path: '/product/detail/:id', component: () => import('pages/product/detailProduct.vue') }
     ]
   }
 ]

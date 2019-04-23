@@ -39,9 +39,7 @@
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
-          <q-btn v-if="props.row.status === 0" size="sm" round dense color="positive" icon="payment" @click="$router.push('/main/sales/detail/'+props.row.id)">
-          </q-btn>
-          <q-btn v-if="props.row.status === 1 || props.row.status === 2" size="sm" round dense color="secondary" icon="receipt" @click="$router.push('/main/sales/detail/'+props.row.id)">
+          <q-btn size="sm" round dense color="secondary" icon="receipt" @click="$router.push('/product/detail/'+props.row.id)">
           </q-btn>
         </q-td>
       </q-tr>
