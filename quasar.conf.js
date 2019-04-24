@@ -44,6 +44,7 @@ module.exports = function (ctx) {
     // framework: 'all' --- includes everything; for dev only!
     framework: {
       components: [
+        'QDialog',
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',
@@ -69,6 +70,7 @@ module.exports = function (ctx) {
         'QScrollArea',
         'Screen',
         'QUploader',
+        'QModal',
 
         // data table
         'QTable',
@@ -82,14 +84,16 @@ module.exports = function (ctx) {
         'QPopover',
         'QSearch',
         'QSelect',
-        'QTooltip'
+        'QTooltip',
       ],
       directives: [
-        'Ripple'
+        'Ripple',
+        'CloseOverlay'
       ],
       // Quasar plugins
       plugins: [
         'Notify'
+
       ]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       // i18n: 'de' // Quasar language
