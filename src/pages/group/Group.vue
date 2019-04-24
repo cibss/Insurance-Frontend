@@ -60,17 +60,17 @@
                   </q-item-side>
                   <q-item-main label="Approve" />
                 </q-item>
-                <q-item >
+                <q-item>
                   <q-item-side>
                     <q-icon name="remove_circle"/>
                   </q-item-side>
                   <q-item-main label="Reject" />
                 </q-item>
-                <q-item >
+                <q-item @click.native="openModal">
                   <q-item-side>
                     <q-icon name="delete"/>
                   </q-item-side>
-                  <q-item-main label="Delete" />
+                  <q-item-main label="Delete"/>
                 </q-item>
               </q-list>
             </q-popover>
@@ -79,6 +79,23 @@
       </q-tr>
     </q-table>
     </q-card-main>
+    <q-modal v-model="opened" style="position: center">
+    <h6>Are you sure you want to leave</h6>
+    <div style="padding: 5px; display: inline-block;">
+    <q-btn
+      color="primary"
+      @click="opened = false"
+      label="Accept"
+    />
+  </div>
+  <div style="padding: 5px; display: inline-block;">
+  <q-btn
+    color="primary"
+    @click="opened = false"
+    label="Cancel"
+  />
+</div>
+  </q-modal>
   </div>
 
 </template>
@@ -90,6 +107,7 @@
 export default {
   data () {
     return {
+      opened: false,
       rowsPerPage: [10, 20, 50],
       pagination: {
         rowsPerPage: 10
@@ -179,6 +197,9 @@ export default {
     this.fetchData()
   },
   methods: {
+    openModal () {
+      this.opened = true
+    },
     fetchData () {
       this.loading = true
       this.$axios.get('/admin/group', {

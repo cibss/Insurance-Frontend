@@ -86,7 +86,7 @@ module.exports = function (ctx) {
         'QPopover',
         'QSearch',
         'QSelect',
-        'QTooltip'
+        'QTooltip',
       ],
       directives: [
         'Ripple',
@@ -95,6 +95,7 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Notify'
+
       ]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       // i18n: 'de' // Quasar language
