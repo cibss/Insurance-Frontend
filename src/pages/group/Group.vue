@@ -3,7 +3,15 @@
     <q-card-title>
       Daftar Group
       <div slot="right">
-        <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
+        <div class="row">
+          <q-select
+            v-model="select"
+           :options="selectOptions"
+           style="margin-right: 16px"
+           @change="fetchData"
+          />
+          <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
+        </div>
       </div>
     </q-card-title>
     <q-card-main>
@@ -39,7 +47,35 @@
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
-          <q-btn size="sm" round dense color="positive" icon="payment" @click="$router.push('/group/detail/'+props.row.id)">
+          <q-btn size="sm" round dense color="primary" icon="create">
+            <q-popover anchor="bottom right" self="top right">
+              <q-list separator link>
+                <q-item @click.native="$router.push('/group/detail/'+props.row.id)">
+                  <q-item-side>
+                    <q-icon name="create"/>
+                  </q-item-side>
+                  <q-item-main label="Detail" />
+                </q-item>
+                <q-item >
+                  <q-item-side>
+                    <q-icon name="check_circle"/>
+                  </q-item-side>
+                  <q-item-main label="Approve" />
+                </q-item>
+                <q-item >
+                  <q-item-side>
+                    <q-icon name="highlight_off"/>
+                  </q-item-side>
+                  <q-item-main label="Reject" />
+                </q-item>
+                <q-item >
+                  <q-item-side>
+                    <q-icon name="delete"/>
+                  </q-item-side>
+                  <q-item-main label="Delete" />
+                </q-item>
+              </q-list>
+            </q-popover>
           </q-btn>
         </q-td>
       </q-tr>
@@ -123,7 +159,26 @@ export default {
       },
       separator: 'horizontal',
       filter: '',
-      loading: false
+      loading: false,
+      select: '',
+      selectOptions: [
+        {
+          label: 'All',
+          value: ''
+        },
+        {
+          label: 'Approved',
+          value: '1'
+        },
+        {
+          label: 'Pending',
+          value: '0'
+        },
+        {
+          label: 'Rejected',
+          value: '-2'
+        }
+      ]
     }
   },
   created () {

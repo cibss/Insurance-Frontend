@@ -79,7 +79,9 @@ module.exports = function (ctx) {
         'QTd',
         'QTableColumns',
         'QPopupEdit',
+        'QPopover',
         'QSearch',
+        'QSelect',
         'QTooltip'
       ],
       directives: [

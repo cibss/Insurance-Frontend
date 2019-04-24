@@ -39,7 +39,23 @@
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
-          <q-btn size="sm" round dense color="secondary" icon="receipt" @click="$router.push('/product/detail/'+props.row.id)">
+          <q-btn size="sm" round dense color="primary" icon="create">
+            <q-popover anchor="bottom right" self="top right">
+              <q-list separator link>
+                <q-item @click.native="$router.push('/product/detail/'+props.row.id)">
+                  <q-item-side>
+                    <q-icon name="create"/>
+                  </q-item-side>
+                  <q-item-main label="Edit" />
+                </q-item>
+                <q-item>
+                  <q-item-side>
+                    <q-icon name="delete"/>
+                  </q-item-side>
+                  <q-item-main label="Delete" />
+                </q-item>
+              </q-list>
+            </q-popover>
           </q-btn>
         </q-td>
       </q-tr>
