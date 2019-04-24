@@ -17,7 +17,9 @@ const routes = [
       { path: '/product', component: () => import('pages/product/product.vue') },
       { path: '/product/new', component: () => import('pages/product/AddProduct.vue') },
       { path: '/product/package', component: () => import('pages/product/product_package.vue') },
-      { path: '/product/detail/:id', component: () => import('pages/product/detailProduct.vue') }
+      { path: '/product/detail/:id', component: () => import('pages/product/detailProduct.vue') },
+      { path: '/chat', component: () => import('pages/chat/Index.vue') },
+      { path: '/setting', component: () => import('pages/Setting.vue') }
     ]
   }
 ]
