@@ -34,9 +34,6 @@
         <q-td key="file" :props="props">
           <q-btn v-if="props.row.pdf.url !== ''" size="sm" round dense color="positive" icon="attachment" @click="openURL(props.row.pdf.url)" />
         </q-td>
-        <q-td key="status" :status="props">
-          <span>{{ props.row.status }}</span>
-        </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
           <q-btn size="sm" round dense color="primary" icon="create">
@@ -103,19 +100,10 @@ export default {
           sortable: true
         },
         {
-          name: 'status',
-          required: true,
-          label: 'Status',
-          align: 'left',
-          field: 'status',
-          sortable: true
-        },
-        {
           name: 'action',
           required: true,
           label: 'Action',
           align: 'left',
-          field: 'status',
           sortable: false
         }
       ],

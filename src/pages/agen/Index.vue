@@ -36,14 +36,15 @@
         <q-td key="username" :props="props">
           <span>{{ props.row.username }}</span>
         </q-td>
-        <q-td key="first_name" :props="props">
-          <span>{{ props.row.first_name }}</span>
-        </q-td>
-        <q-td key="last_name" :props="props">
-          <span>{{ props.row.last_name }}</span>
+        <q-td key="name" :props="props">
+          <span>{{ props.row.first_name }} {{ props.row.last_name }}</span>
         </q-td>
         <q-td key="address" :props="props">
           <span>{{ props.row.address }}</span>
+        </q-td>
+        <q-td key="status" :props="props">
+          <q-icon color="negative" v-if="props.row.status == -2" name="remove_circle" size="16px"/>
+          <q-icon color="positive" v-if="props.row.status == 1" name="check_circle" size="16px"/>
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
@@ -64,7 +65,7 @@
                 </q-item>
                 <q-item>
                   <q-item-side>
-                    <q-icon name="highlight_off"/>
+                    <q-icon name="remove_circle"/>
                   </q-item-side>
                   <q-item-main label="Reject" />
                 </q-item>
@@ -107,19 +108,11 @@ export default {
           sortable: true
         },
         {
-          name: 'first_name',
+          name: 'name',
           required: true,
           label: 'First Name',
           align: 'left',
-          field: 'first_name',
-          sortable: true
-        },
-        {
-          name: 'last_name',
-          required: true,
-          label: 'Last Name',
-          align: 'left',
-          field: 'last_name',
+          field: 'name',
           sortable: true
         },
         {
@@ -131,11 +124,18 @@ export default {
           sortable: false
         },
         {
+          name: 'status',
+          required: true,
+          label: 'Status',
+          align: 'left',
+          field: 'status',
+          sortable: false
+        },
+        {
           name: 'action',
           required: true,
           label: 'Action',
           align: 'left',
-          field: 'status',
           sortable: false
         }
       ],

@@ -33,9 +33,6 @@
         <!-- <q-td key="id" :props="props">
           <span>{{ props.row.id }}</span>
         </q-td> -->
-        <q-td key="id" :id="props">
-          <span>{{ props.row.id }}</span>
-        </q-td>
         <q-td key="id_admin" :id_admin="props">
           <span>{{ props.row.id_admin }}</span>
         </q-td>
@@ -43,7 +40,8 @@
           <span>{{ props.row.name }}</span>
         </q-td>
         <q-td key="status" :status="props">
-          <span>{{ props.row.status }}</span>
+          <q-icon color="negative" v-if="props.row.status == -2" name="remove_circle" size="16px"/>
+          <q-icon color="positive" v-if="props.row.status == 1" name="check_circle" size="16px"/>
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
@@ -64,7 +62,7 @@
                 </q-item>
                 <q-item >
                   <q-item-side>
-                    <q-icon name="highlight_off"/>
+                    <q-icon name="remove_circle"/>
                   </q-item-side>
                   <q-item-main label="Reject" />
                 </q-item>
@@ -111,14 +109,6 @@ export default {
         }
       ],
       columns: [
-        {
-          name: 'id',
-          required: true,
-          label: 'Id',
-          align: 'left',
-          field: 'id',
-          sortable: true
-        },
         {
           name: 'id_admin',
           required: true,
