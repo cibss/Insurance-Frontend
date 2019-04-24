@@ -69,11 +69,11 @@
                   </q-item-side>
                   <q-item-main label="Reject" />
                 </q-item>
-                <q-item >
+                <q-item @click.native="openModal">
                   <q-item-side>
                     <q-icon name="delete"/>
                   </q-item-side>
-                  <q-item-main label="Delete" />
+                  <q-item-main label="Delete"/>
                 </q-item>
               </q-list>
             </q-popover>
@@ -82,17 +82,39 @@
       </q-tr>
     </q-table>
     </q-card-main>
+     <q-modal v-model="opened" style="position: center">
+    <h6>Really Delete this Data?</h6>
+    <div style="padding: 5px; display: inline-block;">
+      <q-btn
+      color="primary"
+      @click="opened = false"
+      label="Yes"
+    />
+    </div>
+    <div style="padding: 5px; display: inline-block;">
+      <q-btn
+      color="primary"
+      @click="opened = false"
+      label="No"
+    />
+    </div>
+  </q-modal>
   </div>
-
 </template>
 
 <style>
+h6{
+  font-size: 15px;
+  text-align: center;
+}
 </style>
 
 <script>
 export default {
+  name: 'PageIndex',
   data () {
     return {
+      opened: false,
       rowsPerPage: [10, 20, 50],
       pagination: {
         rowsPerPage: 10
@@ -176,6 +198,9 @@ export default {
     this.fetchData()
   },
   methods: {
+    openModal () {
+      this.opened = true
+    },
     fetchData () {
       console.log(this.select)
       this.loading = true
