@@ -9,7 +9,7 @@ const routes = [
       { path: '/dashboard', component: () => import('pages/Dashboard.vue') },
       { path: '/agen', component: () => import('pages/agen/Index.vue') },
       { path: '', component: () => import('pages/Dashboard.vue') },
-      { path: '/agen/new', component: () => import('pages/agen/addAgen.vue') },
+      { path: '/agen/new', component: () => import('pages/agen/AddAgen.vue') },
       { path: '/agen/detail/:id', component: () => import('pages/agen/detailAgen.vue') },
       { path: '/group', component: () => import('pages/group/Group.vue') },
       { path: '/group/new', component: () => import('pages/group/addGroup.vue') },
@@ -19,7 +19,7 @@ const routes = [
       { path: '/product/package', component: () => import('pages/product/product_package.vue') },
       { path: '/product/detail/:id', component: () => import('pages/product/detailProduct.vue') },
       { path: '/chat', component: () => import('pages/chat/Index.vue') },
-      { path: '/setting', component: () => import('pages/Setting.vue') }
+      { path: '/setting', component: () => import('pages/setting.vue') }
     ]
   }
 ]
