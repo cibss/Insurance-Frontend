@@ -57,6 +57,7 @@ module.exports = function (ctx) {
         'QListHeader',
         'QField',
         'QInput',
+        'QInnerLoading',
         'QItem',
         'QItemMain',
         'QItemSide',
@@ -67,6 +68,7 @@ module.exports = function (ctx) {
         'QCardSeparator',
         'QCardActions',
         'QScrollArea',
+        'QSpinner',
         'Screen',
         'QUploader',
 

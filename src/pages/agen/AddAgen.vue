@@ -6,28 +6,28 @@
       </q-card-title>
       <q-card-main>
         <div class="form-group">
-          <q-p>NIK</q-p>
+          <span>NIK</span>
           <div>
             <input type="number" placeholder="Nomor Induk"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>First Name</q-p>
+          <span>First Name</span>
           <div>
             <input placeholder="Nama Depan"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Last Name</q-p>
+          <span>Last Name</span>
           <div>
             <input placeholder="Nama Belakang"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Address</q-p>
+          <span>Address</span>
           <div>
             <textarea placeholder="Jl.Pulau kelapa blok f6 No 54. perumahan Bekasi jaya indah, kecamatan Bekasi">
             </textarea>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="form-group">
-          <q-p>Birth Date</q-p>
+          <span>Birth Date</span>
           <div>
             <input type="date" style="width:80%;"/>
             <q-icon name="date_range" style="font-size:22px; margin-bottom:2px; margin-left:3px; color:goldenrod;"/>
@@ -43,28 +43,28 @@
           </div>
         </div>
         <div class="form-group">
-          <q-p>Username</q-p>
+          <span>Username</span>
           <div>
             <input type="number" placeholder="username"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Email</q-p>
+          <span>Email</span>
           <div>
             <input type="number" placeholder="email@email.com"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Phone</q-p>
+          <span>Phone</span>
           <div>
             <input type="number" placeholder="08xxxx"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Password</q-p>
+          <span>Password</span>
           <div>
             <input type="password" placeholder="••••••••"/>
             <q-field class="field-input" :error="false" error-label="error this" />

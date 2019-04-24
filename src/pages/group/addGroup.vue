@@ -6,31 +6,16 @@
       </q-card-title>
       <q-card-main>
         <div class="form-group">
-          <q-p>Id</q-p>
-          <div>
-            <input type="number" placeholder="Id"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-        <div class="form-group">
-          <q-p>Id Admin</q-p>
-          <div>
-            <input placeholder="Id Admin"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-        <div class="form-group">
-          <q-p>Name</q-p>
+          <span>Name</span>
           <div>
             <input placeholder="Name"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Status</q-p>
+          <span>Team Leader</span>
           <div>
-            <textarea placeholder="Status">
-            </textarea>
+            <input placeholder="Cari Nama Agen"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>

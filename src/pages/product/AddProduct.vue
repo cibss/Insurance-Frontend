@@ -6,14 +6,14 @@
       </q-card-title>
       <q-card-main>
         <div class="form-group">
-          <q-p>Name</q-p>
+          <span>Name</span>
           <div>
             <input placeholder="Nama" v-model="product.name"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Description</q-p>
+          <span>Description</span>
           <div>
             <textarea placeholder="Deskripsi" v-model="product.description">
             </textarea>
@@ -25,7 +25,7 @@
           v-if="selectedImage !== null"
           :src="selectedImage">
         <div class="form-group">
-          <q-p>Upload Logo</q-p>
+          <span>Upload Logo</span>
           <input
             ref="foto"
             accept=".gif,.jpg,.jpeg,.png"
@@ -34,7 +34,7 @@
             <q-field class="field-input" :error="false" error-label="error this" />
         </div>
         <div class="form-group">
-          <q-p>Upload Document</q-p>
+          <span>Upload Document</span>
           <div>
             <input
               ref="pdf"
@@ -84,11 +84,10 @@ export default {
 
       this.$axios.post('/admin/create/product', bodyForm, {
         headers: {
-          Authorization: JSON.parse(localStorage.getItem('token-access'))
+          Authorization: JSON.parse(localStorage.getItem('authorization'))
         }
       })
         .then(response => {
-          console.log(response)
           this.$q.notify({
             message: response.data.message,
             timeout: 2000,
