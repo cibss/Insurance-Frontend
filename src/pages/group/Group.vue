@@ -66,7 +66,7 @@
                   </q-item-side>
                   <q-item-main label="Reject" />
                 </q-item>
-                <q-item @click.native="openModal">
+                <q-item v-close-overlay @click.native="openModal(props)">
                   <q-item-side>
                     <q-icon name="delete"/>
                   </q-item-side>
@@ -79,34 +79,35 @@
       </q-tr>
     </q-table>
     </q-card-main>
-    <q-modal v-model="opened" style="position: center">
-    <h6>Are you sure you want to leave</h6>
-    <div style="padding: 5px; display: inline-block;">
-    <q-btn
-      color="primary"
-      @click="opened = false"
-      label="Accept"
-    />
-  </div>
-  <div style="padding: 5px; display: inline-block;">
-  <q-btn
-    color="primary"
-    @click="opened = false"
-    label="Cancel"
-  />
-</div>
-  </q-modal>
+    <q-modal v-model="opened" minimized>
+      <div style="padding: 50px">
+        <div class="q-title q-mb-md">Delete {{selectedData.name}}?</div>
+        <p>This content will be deleted if you click "yes"</p>
+        <div class="btn-confirm">
+          <q-btn color="positive" v-close-overlay label="YES" />
+          <q-btn color="negative" v-close-overlay label="No" />
+        </div>
+      </div>
+    </q-modal>
   </div>
 
 </template>
 
 <style>
+.btn-confirm {
+  text-align: center;
+  margin-top: 32px;
+}
+.btn-confirm > button {
+  margin: 0 12px;
+}
 </style>
 
 <script>
 export default {
   data () {
     return {
+      selectedData: {},
       opened: false,
       rowsPerPage: [10, 20, 50],
       pagination: {
@@ -197,8 +198,9 @@ export default {
     this.fetchData()
   },
   methods: {
-    openModal () {
+    openModal (props) {
       this.opened = true
+      this.selectedData = props.row
     },
     fetchData () {
       this.loading = true
@@ -211,7 +213,6 @@ export default {
         if (data.success) {
           this.tableData = data.data
           this.loading = false
-          console.log(this.tableData)
         }
       })
     }

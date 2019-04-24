@@ -45,7 +45,7 @@
                   </q-item-side>
                   <q-item-main label="Edit" />
                 </q-item>
-                  <q-item @click.native="openModal">
+                  <q-item v-close-overlay @click.native="openModal(props)">
                     <q-item-side>
                     <q-icon name="delete"/>
                   </q-item-side>
@@ -58,23 +58,16 @@
       </q-tr>
     </q-table>
     </q-card-main>
-    <q-modal v-model="opened">
-    <h4>do you really delete this?</h4>
-    <div style="padding: 0px; display: inline-block;">
-    </div>
-    <q-btn
-      color="primary"
-      @click="opened = false"
-      label="Yes"
-    />
-    <div style="padding: 10px; display: inline-block;">
-    </div>
-    <q-btn
-      color="primary"
-      @click="opened = false"
-      label="Cancel"
-    />
-  </q-modal>
+    <q-modal v-model="opened" minimized>
+      <div style="padding: 50px">
+        <div class="q-title q-mb-md">Delete {{selectedData.name}}?</div>
+        <p>This content will be deleted if you click "yes"</p>
+        <div class="btn-confirm">
+          <q-btn color="positive" v-close-overlay label="YES" />
+          <q-btn color="negative" v-close-overlay label="No" />
+        </div>
+      </div>
+    </q-modal>
   </div>
 
 </template>
@@ -87,6 +80,7 @@
 export default {
   data () {
     return {
+      selectedData: {},
       opened: false,
       rowsPerPage: [10, 20, 50],
       pagination: {
@@ -144,8 +138,9 @@ export default {
     this.fetchData()
   },
   methods: {
-    openModal () {
+    openModal (props) {
       this.opened = true
+      this.selectedData = props.row
     },
     fetchData () {
       this.loading = true
