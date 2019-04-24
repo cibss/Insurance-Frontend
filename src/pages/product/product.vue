@@ -45,8 +45,8 @@
                   </q-item-side>
                   <q-item-main label="Edit" />
                 </q-item>
-                <q-item>
-                  <q-item-side>
+                  <q-item @click.native="openModal">
+                    <q-item-side>
                     <q-icon name="delete"/>
                   </q-item-side>
                   <q-item-main label="Delete" />
@@ -58,17 +58,36 @@
       </q-tr>
     </q-table>
     </q-card-main>
+    <q-modal v-model="opened">
+    <h4>do you really delete this?</h4>
+    <div style="padding: 0px; display: inline-block;">
+    </div>
+    <q-btn
+      color="primary"
+      @click="opened = false"
+      label="Yes"
+    />
+    <div style="padding: 10px; display: inline-block;">
+    </div>
+    <q-btn
+      color="primary"
+      @click="opened = false"
+      label="Cancel"
+    />
+  </q-modal>
   </div>
 
 </template>
 
 <style>
+
 </style>
 
 <script>
 export default {
   data () {
     return {
+      opened: false,
       rowsPerPage: [10, 20, 50],
       pagination: {
         rowsPerPage: 10
@@ -125,6 +144,9 @@ export default {
     this.fetchData()
   },
   methods: {
+    openModal () {
+      this.opened = true
+    },
     fetchData () {
       this.loading = true
       this.$axios.get('/admin/product', {
