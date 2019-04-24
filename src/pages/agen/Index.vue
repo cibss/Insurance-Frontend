@@ -110,7 +110,7 @@ export default {
         {
           name: 'name',
           required: true,
-          label: 'First Name',
+          label: 'Name',
           align: 'left',
           field: 'name',
           sortable: true
