@@ -1,7 +1,7 @@
 <template>
-  <q-p>
+  <span>
     Chat Page (on progress)
-  </q-p>
+  </span>
 </template>
 
 <style>

@@ -59,7 +59,7 @@
           </div>
         </div> -->
         <div style="margin-top: 8px; text-align: center">
-          <q-btn style="margin-right: 8px" color="primary" label="update" :loading="loading" />
+          <q-btn style="margin-right: 8px" color="primary" label="update" :loading="loading" @click="updateData" />
           <q-btn color="secondary" label="batal" :loading="loading" @click="$router.back()" />
         </div>
         <q-inner-loading :visible="loading">
@@ -104,6 +104,7 @@ export default {
             color: 'warning'
           })
         }
+        this.loading = false
       }).catch(error => {
         this.$q.notify({
           message: error.response.data.message,
@@ -111,7 +112,39 @@ export default {
           // Available values: 'positive', 'negative', 'warning', 'info'
           color: 'negative'
         })
+        this.loading = false
       })
+    },
+    updateData () {
+      this.loading = true
+      let bodyForm = new FormData()
+      bodyForm.append('name', this.product.name)
+      bodyForm.append('description', this.product.description)
+      bodyForm.append('logo', this.selectedImage)
+      bodyForm.append('pdf', this.product.pdf)
+
+      this.$axios.post('/admin/product/' + this.$route.params.id + '/edit', bodyForm, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      })
+        .then(response => {
+          this.$q.notify({
+            message: response.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'positive'
+          })
+        })
+        .catch(error => {
+          console.log(error.response)
+          this.$q.notify({
+            message: error.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'negative'
+          })
+        })
       this.loading = false
     },
     upload_logo (foto) {

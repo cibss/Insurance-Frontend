@@ -1,7 +1,7 @@
 <template>
-  <q-p>
+  <span>
     Setting Page (on progress)
-  </q-p>
+  </span>
 </template>
 
 <style>

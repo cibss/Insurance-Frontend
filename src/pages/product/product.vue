@@ -63,7 +63,7 @@
         <div class="q-title q-mb-md">Delete {{selectedData.name}}?</div>
         <p>This content will be deleted if you click "yes"</p>
         <div class="btn-confirm">
-          <q-btn color="positive" v-close-overlay label="YES" />
+          <q-btn color="positive" v-close-overlay label="YES" :loading="loading" @click="deleteProduct" />
           <q-btn color="negative" v-close-overlay label="No" />
         </div>
       </div>
@@ -73,7 +73,13 @@
 </template>
 
 <style>
-
+.btn-confirm {
+  text-align: center;
+  margin-top: 32px;
+}
+.btn-confirm > button {
+  margin: 0 12px;
+}
 </style>
 
 <script>
@@ -168,6 +174,34 @@ export default {
         })
       })
       this.loading = false
+    },
+    deleteProduct () {
+      console.log(JSON.parse(localStorage.getItem('authorization')))
+      this.loading = true
+      this.$axios.post('/admin/product/' + this.selectedData.id + '/delete', null, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      })
+        .then(response => {
+          this.$q.notify({
+            message: response.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'positive'
+          })
+          this.fetchData()
+        })
+        .catch(error => {
+          console.log(error.response)
+          this.$q.notify({
+            message: error.response.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'negative'
+          })
+          this.loading = false
+        })
     },
     openURL (url) {
       window.open('http://' + url)

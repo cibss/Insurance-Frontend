@@ -54,19 +54,13 @@
                   </q-item-side>
                   <q-item-main label="Detail" />
                 </q-item>
-                <q-item >
+                <q-item v-if="props.row.status > 0" v-close-overlay @click.native="openApprove(props)">
                   <q-item-side>
                     <q-icon name="check_circle"/>
                   </q-item-side>
                   <q-item-main label="Approve" />
                 </q-item>
-                <q-item>
-                  <q-item-side>
-                    <q-icon name="remove_circle"/>
-                  </q-item-side>
-                  <q-item-main label="Reject" />
-                </q-item>
-                <q-item v-close-overlay @click.native="openModal(props)">
+                <q-item v-close-overlay @click.native="openDelete(props)">
                   <q-item-side>
                     <q-icon name="delete"/>
                   </q-item-side>
@@ -79,13 +73,24 @@
       </q-tr>
     </q-table>
     </q-card-main>
-    <q-modal v-model="opened" minimized>
+    <q-modal v-model="modalDelete" minimized>
       <div style="padding: 50px">
         <div class="q-title q-mb-md">Delete {{selectedData.name}}?</div>
         <p>This content will be deleted if you click "yes"</p>
         <div class="btn-confirm">
-          <q-btn color="positive" v-close-overlay label="YES" />
+          <q-btn color="positive" v-close-overlay label="YES" :loading="loading" @click="deleteGroup" />
           <q-btn color="negative" v-close-overlay label="No" />
+        </div>
+      </div>
+    </q-modal>
+    <q-modal v-model="modalApprove" minimized>
+      <div style="padding: 50px">
+        <div class="q-title q-mb-md">Approvee {{selectedData.name}}?</div>
+        <p>Action will be performed to this data by click "Approve" or "Reject"</p>
+        <div class="btn-confirm">
+          <q-btn color="positive" v-close-overlay label="Approve"/>
+          <q-btn color="negative" v-close-overlay label="Reject" />
+          <q-btn color="secondary" v-close-overlay label="Cancel" />
         </div>
       </div>
     </q-modal>
@@ -108,7 +113,8 @@ export default {
   data () {
     return {
       selectedData: {},
-      opened: false,
+      modalDelete: false,
+      modalApprove: false,
       rowsPerPage: [10, 20, 50],
       pagination: {
         rowsPerPage: 10
@@ -198,8 +204,12 @@ export default {
     this.fetchData()
   },
   methods: {
-    openModal (props) {
-      this.opened = true
+    openDelete (props) {
+      this.modalDelete = true
+      this.selectedData = props.row
+    },
+    openApprove (props) {
+      this.modalApprove = true
       this.selectedData = props.row
     },
     fetchData () {
@@ -215,6 +225,33 @@ export default {
           this.loading = false
         }
       })
+    },
+    deleteGroup () {
+      this.loading = true
+      this.$axios.delete('/admin/group/' + this.selectedData.id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      })
+        .then(response => {
+          this.$q.notify({
+            message: response.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'positive'
+          })
+          this.fetchData()
+        })
+        .catch(error => {
+          console.log(error.response)
+          this.$q.notify({
+            message: error.response.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'negative'
+          })
+          this.loading = false
+        })
     }
   }
 }

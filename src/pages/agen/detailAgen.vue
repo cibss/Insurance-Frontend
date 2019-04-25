@@ -6,28 +6,28 @@
       </q-card-title>
       <q-card-main>
         <div class="form-group">
-          <q-p>Username</q-p>
+          <span>Username</span>
           <div>
             <input type="text" placeholder="Username"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>First Name</q-p>
+          <span>First Name</span>
           <div>
             <input placeholder="Nama Depan"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Last Name</q-p>
+          <span>Last Name</span>
           <div>
             <input placeholder="Nama Belakang"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
-          <q-p>Address</q-p>
+          <span>Address</span>
           <div>
             <textarea placeholder="Jl.Pulau kelapa blok f6 No 54. perumahan Bekasi jaya indah, kecamatan Bekasi">
             </textarea>
@@ -45,6 +45,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      loading: false
+    }
+  }
 }
 </script>
 
