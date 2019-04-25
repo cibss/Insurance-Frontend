@@ -6,6 +6,13 @@
       </q-card-title>
       <q-card-main>
         <div class="form-group">
+          <span>NIK</span>
+          <div>
+            <input type="number" name="" placeholder="0022xxx">
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
           <span>Username</span>
           <div>
             <input type="text" placeholder="Username"/>
@@ -31,6 +38,48 @@
           <div>
             <textarea placeholder="Jl.Pulau kelapa blok f6 No 54. perumahan Bekasi jaya indah, kecamatan Bekasi">
             </textarea>
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
+          <span>Birth Date</span>
+          <div>
+            <input type="date" name="">
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
+          <span>Email</span>
+          <div>
+            <input type="email" name="" placeholder="saya@gmail.com">
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
+          <span>Password</span>
+          <div>
+            <input type="password" name="" placeholder="xxxxx">
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
+          <span>Phone</span>
+          <div>
+            <input type="number" name="" placeholder="0022xxx">
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
+          <span>Status</span>
+          <div>
+            <input placeholder="1">
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
+          <span>Photo</span>
+          <div>
+            <input type="file">
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
