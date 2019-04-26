@@ -222,6 +222,7 @@ export default {
             color: 'warning'
           })
         }
+        this.loading = false
       }).catch(error => {
         this.$q.notify({
           message: error.response.data.message,
@@ -229,8 +230,8 @@ export default {
           // Available values: 'positive', 'negative', 'warning', 'info'
           color: 'negative'
         })
+        this.loading = false
       })
-      this.loading = false
     },
     deleteProduct () {
       this.loading = true

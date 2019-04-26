@@ -8,7 +8,7 @@
             v-model="select"
            :options="selectOptions"
            style="margin-right: 16px"
-           @change="fetchData"
+           @input="fetchData"
           />
           <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
         </div>

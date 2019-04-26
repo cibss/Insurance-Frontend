@@ -297,10 +297,11 @@ export default {
             color: 'warning'
           })
         }
+        this.loading = false
       }).catch(error => {
+        this.loading = false
         console.log(error.response)
       })
-      this.loading = false
     },
     approveAgen () {
       this.loading = true
