@@ -11,15 +11,14 @@
       :data="tableData"
       :columns="columns"
       :loading="loading"
-      :pagination.sync="pagination"
-      :rows-per-page-options="rowsPerPage"
-      :filter="filter"
+      :pagination.sync="page"
       row-key="name"
       rows-per-page-label="Data per halaman"
       no-data-label="Tidak terdapat data"
       no-results-label="Produk tidak ditemukan"
       loading-label="Memuat"
       class="bg-white"
+      hide-bottom
     >
       <q-tr slot="body" slot-scope="props" :props="props">
         <!-- <q-td key="id" :props="props">
@@ -57,6 +56,42 @@
         </q-td>
       </q-tr>
     </q-table>
+    <!-- PAGINATION -->
+    <q-card-title>
+      <q-inner-loading :visible="loading">
+        <q-spinner color="secondary" :size="60" />
+      </q-inner-loading>
+      <div v-if="tableData.length == 0" style="text-align:center" class="text-faded">
+        Tidak ada data
+      </div>
+      <div v-if="tableData.length > 0" slot="right">
+        <div class="row">
+          <div style="margin: 5px 16px;">
+            Data per halaman
+          </div>
+          <q-select
+            v-model="page.rowsPerPage"
+           :options="rowsPerPage"
+           style="margin-right: 16px;height: 28px;font-size: 14px;"
+           @input="fetchData"/>
+          <q-btn
+            color="grey"
+            :disable="pagination.page == 1"
+            round
+            icon="keyboard_arrow_left"
+            style="margin-right: 16px; font-size: 10px"
+            @click="prev_page"/>
+          <q-btn
+            color="grey"
+            :disable="pagination.is_last"
+            round
+            icon="keyboard_arrow_right"
+            style="font-size:10px"
+            @click="next_page"/>
+        </div>
+      </div>
+    </q-card-title>
+    <!-- PAGINATION END -->
     </q-card-main>
     <q-modal v-model="opened" minimized>
       <div style="padding: 50px">
@@ -88,9 +123,12 @@ export default {
     return {
       selectedData: {},
       opened: false,
-      rowsPerPage: [10, 20, 50],
       pagination: {
-        rowsPerPage: 10
+        page: 1,
+        is_last: false
+      },
+      page: {
+        rowsPerPage: 5
       },
       tableData: [],
       columns: [
@@ -126,6 +164,20 @@ export default {
           sortable: false
         }
       ],
+      rowsPerPage: [
+        {
+          label: '5',
+          value: 5
+        },
+        {
+          label: '10',
+          value: 10
+        },
+        {
+          label: '25',
+          value: 25
+        }
+      ],
       tableFilter: {
         type: '',
         start: '',
@@ -150,13 +202,18 @@ export default {
     },
     fetchData () {
       this.loading = true
-      this.$axios.get('/admin/product', {
+      this.$axios.get('/admin/product?page=' + this.pagination.page + '&per_page=' + this.page.rowsPerPage, {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }
       }).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data
+          if (res.data.pagination.is_last === 1) {
+            this.pagination.is_last = true
+          } else {
+            this.pagination.is_last = false
+          }
         } else {
           this.$q.notify({
             message: res.data.message,
@@ -176,7 +233,6 @@ export default {
       this.loading = false
     },
     deleteProduct () {
-      console.log(JSON.parse(localStorage.getItem('authorization')))
       this.loading = true
       this.$axios.post('/admin/product/' + this.selectedData.id + '/delete', null, {
         headers: {
@@ -205,6 +261,14 @@ export default {
     },
     openURL (url) {
       window.open('http://' + url)
+    },
+    prev_page () {
+      this.pagination.page--
+      this.fetchData()
+    },
+    next_page () {
+      this.pagination.page++
+      this.fetchData()
     }
   }
 }

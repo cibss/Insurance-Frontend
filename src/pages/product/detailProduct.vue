@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="form-group">
-          <q-p>Description</q-p>
+          <span>Description</span>
           <div>
             <textarea placeholder="Deskripsi" v-model="product.description">
             </textarea>
@@ -72,12 +72,17 @@
 
 <script>
 export default {
-  created () {
+  mounted () {
     this.fetchData()
   },
   data () {
     return {
-      product: {},
+      product: {
+        name: '',
+        description: '',
+        logo: null,
+        pdf: null
+      },
       loading: false,
       selectedImage: null
     }
@@ -90,19 +95,14 @@ export default {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }
       }).then(res => {
+        console.log(res.data.data[0])
         if (res.data.success) {
           this.product = res.data.data[0]
-          console.log(this.product)
           if (this.product.logo.filename !== '') {
             this.selectedImage = 'http://' + this.product.logo.url
           }
         } else {
-          this.$q.notify({
-            message: res.data.message,
-            timeout: 2000,
-            // Available values: 'positive', 'negative', 'warning', 'info'
-            color: 'warning'
-          })
+          console.log(res)
         }
         this.loading = false
       }).catch(error => {
@@ -117,24 +117,26 @@ export default {
     },
     updateData () {
       this.loading = true
-      let bodyForm = new FormData()
+      var bodyForm = new FormData()
       bodyForm.append('name', this.product.name)
       bodyForm.append('description', this.product.description)
-      bodyForm.append('logo', this.selectedImage)
+      bodyForm.append('logo', this.product.logo)
       bodyForm.append('pdf', this.product.pdf)
 
       this.$axios.post('/admin/product/' + this.$route.params.id + '/edit', bodyForm, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+          Authorization: JSON.parse(localStorage.getItem('authorization'))
         }
       })
         .then(response => {
+          console.log(response)
           this.$q.notify({
             message: response.data.message,
             timeout: 2000,
             // Available values: 'positive', 'negative', 'warning', 'info'
             color: 'positive'
           })
+          this.loading = false
         })
         .catch(error => {
           console.log(error.response)
@@ -144,8 +146,8 @@ export default {
             // Available values: 'positive', 'negative', 'warning', 'info'
             color: 'negative'
           })
+          this.loading = false
         })
-      this.loading = false
     },
     upload_logo (foto) {
       this.product.logo = foto.target.files[0]
