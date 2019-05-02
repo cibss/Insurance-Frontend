@@ -4,7 +4,9 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'axios'
+      'axios',
+      'platinum',
+      'firebase'
     ],
     css: [
       'app.styl'

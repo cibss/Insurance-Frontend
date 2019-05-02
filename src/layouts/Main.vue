@@ -12,6 +12,15 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
         <img class="header-icon" src="~assets/PCid_logos/prvlg_clb_i01.png">
+              <q-btn
+        style="font-size:16px;"
+        flat
+        round
+        dense
+        icon="notifications"
+        @click="rightDrawer = !rightDrawer"
+      />
+      <q-p style="position:absolute; right:15px; bottom:30px;">{{ notif.length }}</q-p>
       </q-toolbar>
     </q-layout-header>
 
@@ -63,6 +72,29 @@
       </q-item>
   </q-layout-drawer>
 
+    <!-- NOTIFIKASI -->
+    <q-layout-drawer
+      side="right"
+      v-model="rightDrawer"
+      :overlay="true"
+      behavior="mobile"
+    >
+      <q-item style="padding: 16px">
+        <q-item-side icon="arrow_forward" @click.native="rightDrawer = !rightDrawer"/>
+        <q-item-main label="Notifikasi" />
+      </q-item>
+
+      <q-item :class=" notif.length == 0 ? '' : 'hidden' ">
+        <q-item-main sublabel="Tidak ada notifikasi" />
+      </q-item>
+
+      <q-item v-for="v of notif"  v-bind:key="v.id">
+        <q-item-main :label="v.title" :sublabel="v.description" />
+        <q-icon @click.native="()=>setReadNotif(v.id)" name="close"  />
+      </q-item>
+
+    </q-layout-drawer>
+
     <q-page-container>
       <q-page style="padding: 32px">
         <router-view />
@@ -80,6 +112,27 @@ colors.setBrand('secondary', '#ccc')
 export default {
   name: 'MyLayout',
   created () {
+    let getSetNotification = () => {
+      this.$axios.get('/admin/notify?is_read=false', {
+        headers: {
+          Authorization: JSON.parse(localStorage.getItem('authorization'))
+        }
+      })
+        .then(res => {
+          let data = res.data.data
+          if (data) {
+            this.$data.notif = data
+          }
+        })
+        .catch(res => {
+          console.error(res)
+        })
+    }
+    getSetNotification()
+    this.$pl.onMessage(res => {
+      console.log(res)
+      getSetNotification()
+    })
     if (localStorage.getItem('user') == null) {
       this.$router.replace({
         path: '/login'
@@ -91,6 +144,8 @@ export default {
   data () {
     return {
       leftDrawerOpen: true,
+      rightDrawer: true,
+      notif: [],
       user: {}
     }
   },
@@ -103,6 +158,33 @@ export default {
       this.$q.notify({
         color: 'blue',
         message: 'Anda berhasil Keluar'
+      })
+    },
+    setReadNotif (id) {
+      var fd = new FormData()
+      fd.append('is_read', true)
+      this.$axios.put('/admin/notify/' + id, fd, {
+        headers: {
+          Authorization: JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        console.log(res)
+        this.$axios.get('/admin/notify?is_read=false', {
+          headers: {
+            Authorization: JSON.parse(localStorage.getItem('authorization'))
+          }
+        })
+          .then(res => {
+            let data = res.data.data
+            if (data) {
+              this.$data.notif = data
+            }
+          })
+          .catch(res => {
+            console.error(res)
+          })
+      }).catch(res => {
+        console.error(res)
       })
     }
   }
