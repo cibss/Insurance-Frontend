@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://api.privilegeclub.id/',
+  baseURL: 'https://api.privilegeclub.id/',
   crossDomain: true
 })
 export default ({ app, router, Vue }) => {
