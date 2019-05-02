@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const instance = axios.create({
+const instanceAxios = axios.create({
   baseURL: 'https://api.privilegeclub.id/',
   crossDomain: true
 })
