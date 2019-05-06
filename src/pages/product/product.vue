@@ -38,12 +38,18 @@
           <q-btn size="sm" round dense color="primary" icon="create">
             <q-popover anchor="bottom right" self="top right">
               <q-list separator link>
-                <q-item @click.native="$router.push('/product/detail/'+props.row.id)">
-                  <q-item-side>
-                    <q-icon name="create"/>
-                  </q-item-side>
-                  <q-item-main label="Edit" />
-                </q-item>
+                  <q-item @click.native="$router.push('/product/detail/'+props.row.id)">
+                    <q-item-side>
+                      <q-icon name="create"/>
+                    </q-item-side>
+                    <q-item-main label="Edit" />
+                  </q-item>
+                  <q-item @click.native="$router.push('/product/'+props.row.id+'/package')">
+                    <q-item-side>
+                      <q-icon name="create"/>
+                    </q-item-side>
+                    <q-item-main label="Add Package" />
+                  </q-item>
                   <q-item v-close-overlay @click.native="openModal(props)">
                     <q-item-side>
                     <q-icon name="delete"/>

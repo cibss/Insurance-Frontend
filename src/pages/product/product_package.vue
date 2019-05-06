@@ -3,7 +3,7 @@
     <q-card-title>
       Daftar Produck Package
       <div slot="right">
-        <q-btn color="primary" label="Tambah Product Baru" />
+        <q-btn @click.native="addPackage" color="primary" label="Tambah Package Baru" />
       </div>
     </q-card-title>
     <q-card-separator />
@@ -132,9 +132,13 @@ export default {
     this.fetchData()
   },
   methods: {
+    addPackage () {
+      console.log('hai')
+      this.$router.push('/product/' + this.$route.params.id_product + '/package/new')
+    },
     fetchData () {
       this.loading = true
-      this.$axios.get('/admin/product/10/package', {
+      this.$axios.get('/admin/product/' + this.$route.params.id_product + '/package', {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }
