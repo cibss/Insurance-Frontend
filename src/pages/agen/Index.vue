@@ -41,7 +41,7 @@
           <span>{{ props.row.address }}</span>
         </q-td>
         <q-td key="status" :props="props">
-          <q-icon color="negative" v-if="props.row.status == -2" name="remove_circle" size="16px"/>
+          <q-icon color="negative" v-if="props.row.status == -1" name="remove_circle" size="16px"/>
           <q-icon color="positive" v-if="props.row.status == 1" name="check_circle" size="16px"/>
         </q-td>
         <q-td key="action" :props="props">
@@ -139,7 +139,7 @@
         </div>
         <div class="btn-confirm">
           <q-btn color="positive" v-close-overlay label="Approve" :loading="loading" @click="approveAgen"/>
-          <q-btn color="negative" v-close-overlay label="Reject" />
+          <q-btn color="negative" v-close-overlay label="Reject" @click="rejectAgen" />
           <q-btn color="secondary" v-close-overlay label="Cancel" />
         </div>
       </div>
@@ -238,7 +238,7 @@ export default {
         },
         {
           label: 'Rejected',
-          value: '-2'
+          value: '-1'
         }
       ],
       rowsPerPage: [
@@ -301,6 +301,15 @@ export default {
       }).catch(error => {
         this.loading = false
         console.log(error.response)
+      })
+    },
+    rejectAgen () {
+      this.$axios.get('/admin/agen/reject/' + this.selectedData.id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        console.log(res)
       })
     },
     approveAgen () {
