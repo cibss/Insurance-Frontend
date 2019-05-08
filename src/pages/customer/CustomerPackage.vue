@@ -31,7 +31,7 @@
           <span>{{ props.row.title }}</span>
         </q-td>
         <q-td key="status" :props="props">
-          <q-icon color="negative" v-if="props.row.status == -1" name="remove_circle" size="16px"/>
+          <q-icon color="negative" v-if="props.row.status == -6" name="remove_circle" size="16px"/>
           <q-icon color="positive" v-if="props.row.status == 1" name="check_circle" size="16px"/>
           <q-icon color="warning" v-if="props.row.status == 0" name="pause_circle_filled" size="16px"/>
         </q-td>
@@ -43,7 +43,7 @@
                     <q-item-side>
                       <q-icon name="cancel"/>
                     </q-item-side>
-                    <q-item-main label="Set Inactive" />
+                    <q-item-main label="Reject" />
                   </q-item>
                   <q-item v-close-overlay @click.native="openModal(props, 'modalApprove')">
                     <q-item-side>

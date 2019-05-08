@@ -41,7 +41,7 @@
           <span>{{ props.row.address }}</span>
         </q-td>
         <q-td key="status" :props="props">
-          <q-icon color="negative" v-if="props.row.status == -1" name="remove_circle" size="16px"/>
+          <q-icon color="negative" v-if="props.row.status == -6" name="remove_circle" size="16px"/>
           <q-icon color="positive" v-if="props.row.status == 1" name="check_circle" size="16px"/>
         </q-td>
         <q-td key="action" :props="props">
@@ -238,7 +238,7 @@ export default {
         },
         {
           label: 'Rejected',
-          value: '-1'
+          value: '-6'
         }
       ],
       rowsPerPage: [
