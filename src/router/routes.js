@@ -14,6 +14,7 @@ const routes = [
       { path: '/group', component: () => import('pages/group/Group.vue') },
       { path: '/group/new', component: () => import('pages/group/addGroup.vue') },
       { path: '/group/detail/:id', component: () => import('pages/group/detailGroup.vue') },
+      { path: '/packageCustomer', component: () => import('pages/customer/CustomerPackage.vue') },
       { path: '/product', component: () => import('pages/product/product.vue') },
       { path: '/product/new', component: () => import('pages/product/AddProduct.vue') },
       { path: '/product/:id_product/package/new', component: () => import('pages/product/AddPackage.vue') },
