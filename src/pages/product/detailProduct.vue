@@ -99,7 +99,7 @@ export default {
         if (res.data.success) {
           this.product = res.data.data[0]
           if (this.product.logo.filename !== '') {
-            this.selectedImage = 'http://' + this.product.logo.url
+            this.selectedImage = this.product.logo.url
           }
         } else {
           console.log(res)
@@ -157,7 +157,7 @@ export default {
       this.product.pdf = file.target.files[0]
     },
     openURL () {
-      window.open('http://' + this.product.pdf.url)
+      window.open(this.product.pdf.url)
     }
   }
 }

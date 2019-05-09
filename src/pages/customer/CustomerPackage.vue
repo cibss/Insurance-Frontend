@@ -298,7 +298,7 @@ export default {
         })
     },
     openURL (url) {
-      window.open('http://' + url)
+      window.open(url)
     },
     prev_page () {
       this.pagination.page--
