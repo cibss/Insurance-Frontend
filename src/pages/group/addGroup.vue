@@ -25,7 +25,7 @@
         </div>
       </q-card-main>
     </q-card>
-    <div class="col-lg-1">
+    <!-- <div class="col-lg-1">
     </div>
     <q-card class="col-lg-5">
       <q-card-title>
@@ -47,7 +47,7 @@
           <q-btn color="secondary" label="batal" :loading="loading" @click="$router.back()" />
         </div>
       </q-card-main>
-    </q-card>
+    </q-card> -->
   </div>
 </template>
 

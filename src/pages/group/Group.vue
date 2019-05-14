@@ -11,7 +11,7 @@
            @input="fetchData"
           />
           <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
-          <q-btn color="primary" label="Export Data" @click="exportGroup"/>
+          <!-- <q-btn color="primary" label="Export Data" @click="exportGroup"/> -->
         </div>
       </div>
     </q-card-title>
