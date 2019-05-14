@@ -40,7 +40,7 @@
           <span>{{ props.row.name }}</span>
         </q-td>
         <q-td key="status" :status="props">
-          <q-icon color="negative" v-if="props.row.status == -2" name="remove_circle" size="16px"/>
+          <q-icon color="negative" v-if="props.row.status == -6" name="remove_circle" size="16px"/>
           <q-icon color="positive" v-if="props.row.status == 1" name="check_circle" size="16px"/>
         </q-td>
         <q-td key="action" :props="props">
@@ -54,7 +54,7 @@
                   </q-item-side>
                   <q-item-main label="Detail" />
                 </q-item>
-                <q-item v-if="props.row.status > 0" v-close-overlay @click.native="openApprove(props)">
+                <q-item v-if="props.row.status == 0" v-close-overlay @click.native="openApprove(props)">
                   <q-item-side>
                     <q-icon name="check_circle"/>
                   </q-item-side>
@@ -124,8 +124,8 @@
         <div class="q-title q-mb-md">Approvee {{selectedData.name}}?</div>
         <p>Action will be performed to this data by click "Approve" or "Reject"</p>
         <div class="btn-confirm">
-          <q-btn color="positive" v-close-overlay label="Approve"/>
-          <q-btn color="negative" v-close-overlay label="Reject" />
+          <q-btn color="positive" v-close-overlay label="Approve" @click.native="approveGroup" />
+          <q-btn color="negative" v-close-overlay label="Reject" @click.native="rejectGroup" />
           <q-btn color="secondary" v-close-overlay label="Cancel" />
         </div>
       </div>
@@ -244,7 +244,7 @@ export default {
         },
         {
           label: 'Rejected',
-          value: '-2'
+          value: '-6'
         }
       ]
     }
@@ -257,6 +257,40 @@ export default {
     this.fetchData()
   },
   methods: {
+    approveGroup () {
+      this.$axios.get('/admin/group/approve/' + this.selectedData.id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        if (res.data.success) {
+          this.$q.notify({
+            message: res.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'positive'
+          })
+        }
+        this.fetchData()
+      })
+    },
+    rejectGroup () {
+      this.$axios.get('/admin/group/reject/' + this.selectedData.id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        if (res.data.success) {
+          this.$q.notify({
+            message: res.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'positive'
+          })
+        }
+        this.fetchData()
+      })
+    },
     exportGroup () {
       let fd = new FormData()
       fd.append('tabel', 'groups')
