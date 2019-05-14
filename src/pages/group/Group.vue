@@ -11,6 +11,7 @@
            @input="fetchData"
           />
           <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
+          <q-btn color="primary" label="Export Data" @click="exportGroup"/>
         </div>
       </div>
     </q-card-title>
@@ -256,6 +257,24 @@ export default {
     this.fetchData()
   },
   methods: {
+    exportGroup () {
+      let fd = new FormData()
+      fd.append('tabel', 'groups')
+      fd.append('only_header', 'false')
+      fd.append('cols[]', 'name')
+      fd.append('cols[]', 'status')
+      fd.append('cols[]', 'id_admin')
+      this.$axios.post('/admin/export', fd, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        let data = res.data.data
+        if (data.filename) {
+          window.open(data.url)
+        }
+      })
+    },
     openDelete (props) {
       this.modalDelete = true
       this.selectedData = props.row
