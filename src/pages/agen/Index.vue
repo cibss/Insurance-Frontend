@@ -310,6 +310,22 @@ export default {
         }
       }).then(res => {
         console.log(res)
+        if (res.data.success) {
+          this.tableData = res.data.data
+          this.$q.notify({
+            message: res.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'positive'
+          })
+        } else {
+          this.$q.notify({
+            message: res.data.message,
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'warning'
+          })
+        }
       })
     },
     approveAgen () {
