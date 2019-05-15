@@ -39,17 +39,23 @@
           <q-btn size="sm" round dense color="primary" icon="create">
             <q-popover anchor="bottom right" self="top right">
               <q-list separator link>
-                  <q-item v-close-overlay @click.native="openModal(props, 'modalReject')" >
-                    <q-item-side>
-                      <q-icon name="cancel"/>
-                    </q-item-side>
-                    <q-item-main label="Reject" />
-                  </q-item>
-                  <q-item v-close-overlay @click.native="openModal(props, 'modalApprove')">
-                    <q-item-side>
-                      <q-icon name="check_circle"/>
-                    </q-item-side>
+                <q-item v-close-overlay @click.native="openModal(props, 'modalDetail')">
+                  <q-item-side>
+                    <q-icon name="create"/>
+                  </q-item-side>
+                  <q-item-main label="Detail" />
+                </q-item>
+                <q-item v-close-overlay @click.native="openModal(props, 'modalApprove')">
+                  <q-item-side>
+                    <q-icon name="check_circle"/>
+                  </q-item-side>
                   <q-item-main label="Approve" />
+                </q-item>
+                <q-item v-close-overlay @click.native="openModal(props, 'modalReject')" >
+                  <q-item-side>
+                    <q-icon name="cancel"/>
+                  </q-item-side>
+                  <q-item-main label="Reject" />
                 </q-item>
               </q-list>
             </q-popover>
@@ -94,6 +100,78 @@
     </q-card-title>
     <!-- PAGINATION END -->
     </q-card-main>
+    <q-modal v-model="modalDetail" :content-css="{minWidth: '40vw', minHeight: 'auto'}">
+      <div style="padding: 36px; position:relative">
+        <q-btn
+          flat
+          icon="close"
+          size="lg"
+          v-close-overlay
+          style="position:absolute; right:-8px; top:0;"/>
+        <div class="q-headline">#{{ selectedData.id }} {{ selectedData.name }}</div>
+        <div class="product-data">
+          <p>Expired ContractedDate</p>
+          <p class="bold">{{ this.$pl.dateFormat(selectedData.expired_at) }}</p>
+        </div>
+        <div class="product-data">
+          <p>No SPAJ</p>
+          <p class="bold">{{ selectedData.spaj }}</p>
+        </div>
+        <div class="product-data">
+          <p>No. Polis</p>
+          <p class="bold">{{ selectedData.polis }}</p>
+        </div>
+        <div class="product-data">
+          <p>Tanggal Masuk</p>
+          <p class="bold">{{ this.$pl.dateFormat(selectedData.approved_at) }}</p>
+        </div>
+        <div class="product-data">
+          <p>Tanggal Submit</p>
+          <p class="bold">{{ this.$pl.dateFormat(selectedData.created_at) }}</p>
+        </div>
+        <div class="product-data">
+          <p>PaymentDueDate</p>
+          <p class="bold">{{ this.$pl.dateFormat(selectedData.payment_due_at) }}</p>
+        </div>
+        <div class="product-data">
+          <p>Tanggal Pencairan Dana</p>
+          <p class="bold">05/08/2018</p>
+        </div>
+        <div class="product-data">
+          <p>Jumlah Dana Dicairkan</p>
+          <p class="bold">200.000.000</p>
+        </div>
+        <div class="product-data">
+          <p>Nominal</p>
+          <p class="bold">{{ selectedData.nominal }}</p>
+        </div>
+        <div class="product-data">
+          <p>MGI</p>
+          <p class="bold">{{ selectedData.mgi }} month</p>
+        </div>
+        <div class="product-data">
+          <p>FYP</p>
+          <p class="bold">{{ selectedData.fyp }}</p>
+        </div>
+        <div class="product-data">
+          <p>Rate</p>
+          <p class="bold">{{ selectedData.rate }}%</p>
+        </div>
+        <div class="product-data">
+          <p>Form</p>
+          <a :href=" selectedData.form != null ? selectedData.form.url : '' " target="_blank">
+            <p class="bold">{{ selectedData.form != null ? selectedData.form.filename : '' }}</p>
+          </a>
+        </div>
+        <div class="product-data">
+          <p>Status</p>
+          <p class="bold">{{ selectedData.status }}</p>
+        </div>
+        <div class="btn-confirm">
+          <q-btn color="secondary" v-close-overlay label="Close" />
+        </div>
+      </div>
+    </q-modal>
     <q-modal v-model="modalApprove" minimized>
       <div style="padding: 50px">
         <div class="q-title q-mb-md">Approve {{selectedData.name}}?</div>
@@ -126,6 +204,20 @@
 .btn-confirm > button {
   margin: 0 12px;
 }
+.product-data{
+    margin:auto;
+    padding:15px;
+    padding-left:30px;
+  }
+  .product-data:nth-child(even){
+    background:#efefef;
+  }
+  .product-data > p {
+    margin-bottom:8px;
+  }
+  .bold {
+    font-weight:bold;
+  }
 </style>
 
 <script>
@@ -135,6 +227,7 @@ export default {
       selectedData: {},
       modalApprove: false,
       modalReject: false,
+      modalDetail: false,
       pagination: {
         page: 1,
         is_last: false

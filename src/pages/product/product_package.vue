@@ -1,12 +1,11 @@
 <template>
-  <q-card inline class="w-full">
+  <div inline class="w-full">
     <q-card-title>
       Daftar Produck Package
       <div slot="right">
         <q-btn @click.native="addPackage" color="primary" label="Tambah Package Baru" />
       </div>
     </q-card-title>
-    <q-card-separator />
     <q-card-main>
       <q-table
       :data="tableData"
@@ -23,9 +22,6 @@
       class="bg-white"
     >
       <q-tr slot="body" slot-scope="props" :props="props">
-        <q-td key="id" :props="props">
-          <span>{{ props.row.id }}</span>
-        </q-td>
         <q-td key="description" :description="props">
           <span>{{ props.row.description }}</span>
         </q-td>
@@ -48,7 +44,7 @@
       </q-tr>
     </q-table>
     </q-card-main>
-  </q-card>
+  </div>
 
 </template>
 
@@ -73,14 +69,6 @@ export default {
         }
       ],
       columns: [
-        {
-          id_product: '10',
-          required: true,
-          label: 'Id_product',
-          align: 'left',
-          field: 'id',
-          sortable: true
-        },
         {
           name: 'Description',
           required: true,
