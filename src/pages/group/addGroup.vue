@@ -8,20 +8,20 @@
         <div class="form-group">
           <span>Name</span>
           <div>
-            <input placeholder="Name"/>
+            <input v-model="name" placeholder="Name"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
-        <div class="form-group">
+       <!-- <div class="form-group">
           <span>Team Leader</span>
           <div>
             <input placeholder="Cari Nama Agen"/>
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
-        </div>
+        </div> -->
         <div style="margin-top: 8px; text-align: center">
-          <q-btn style="margin-right: 8px" color="primary" label="tambah" :loading="loading" />
-          <q-btn color="secondary" label="batal" :loading="loading" @click="$router.back()" />
+          <q-btn style="margin-right: 8px" color="primary" @click.native="addGroup" label="tambah" :loading="loadingBtnAddGroup" />
+          <q-btn color="secondary" label="batal" :loading="false" @click="$router.back()" />
         </div>
       </q-card-main>
     </q-card>
@@ -55,6 +55,8 @@
 export default {
   data () {
     return {
+      loadingBtnAddGroup: false,
+      name: '',
       btnGetTemplate: false,
       excelImport: null
     }
@@ -63,6 +65,34 @@ export default {
     upload_excel (foto) {
       this.excelImport = foto.target.files[0]
       console.log(this.excelImport)
+    },
+    addGroup () {
+      this.loadingBtnAddGroup = true
+
+      let fd = new FormData()
+      fd.append('name', this.name)
+      this.$axios.post('/admin/group', fd, {
+        headers: {
+          Authorization: JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(response => {
+        this.$q.notify({
+          message: response.data.message,
+          timeout: 2000,
+          // Available values: 'positive', 'negative', 'warning', 'info'
+          color: 'positive'
+        })
+        this.loadingBtnAddGroup = false
+      }).catch(error => {
+        console.log(error.response)
+        this.$q.notify({
+          message: error.message,
+          timeout: 2000,
+          // Available values: 'positive', 'negative', 'warning', 'info'
+          color: 'negative'
+        })
+        this.loadingBtnAddGroup = false
+      })
     },
     postImport () {
       let fd = new FormData()
