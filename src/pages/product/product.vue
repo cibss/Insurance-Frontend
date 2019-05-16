@@ -25,13 +25,13 @@
           <span>{{ props.row.id }}</span>
         </q-td> -->
         <q-td key="brand" :props="props">
-          <img style="max-width: 80px" :src="props.row.logo.url">
+          <img style="max-width: 80px" :src="props.row.logo ? props.row.logo.url : '' ">
         </q-td>
         <q-td key="name" :props="props">
           <span>{{ props.row.name }}</span>
         </q-td>
         <q-td key="file" :props="props">
-          <q-btn v-if="props.row.pdf.url !== ''" size="sm" round dense color="positive" icon="attachment" @click="openURL(props.row.pdf.url)" />
+          <q-btn v-if="props.row.pdf" size="sm" round dense color="positive" icon="attachment" @click="openURL(props.row.pdf.url)" />
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->

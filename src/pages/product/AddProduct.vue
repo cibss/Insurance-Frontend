@@ -20,6 +20,24 @@
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
+        <div class="form-group">
+          <span>Parent</span>
+          <div>
+            <select v-model="product.id_parent">
+              <option v-for="v of optionParent" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
+            </select>
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
+        <div class="form-group">
+          <span>Type</span>
+          <div>
+            <select v-model="product.id_product_type">
+              <option v-for="v of optionType" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
+            </select>
+            <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div>
         <img
           style="max-width: 160px"
           v-if="selectedImage !== null"
@@ -60,11 +78,32 @@ export default {
         name: '',
         description: '',
         logo: null,
-        pdf: null
+        pdf: null,
+        id_parent: 0,
+        id_product_type: 0
       },
+      optionParent: [{ name: 'Name Product', id: 1 }],
+      optionType: [],
       selectedImage: null,
       loading: false
     }
+  },
+  created () {
+    this.$axios.get('/admin/product', {
+      headers: {
+        Authorization: JSON.parse(localStorage.getItem('authorization'))
+      }
+    }).then(res => {
+      this.optionParent = res.data.data
+    })
+
+    this.$axios.get('/admin/producttype', {
+      headers: {
+        Authorization: JSON.parse(localStorage.getItem('authorization'))
+      }
+    }).then(res => {
+      this.optionType = res.data.data
+    })
   },
   methods: {
     upload_logo (foto) {
@@ -77,10 +116,9 @@ export default {
     addProduct () {
       this.loading = true
       var bodyForm = new FormData()
-      bodyForm.append('name', this.product.name)
-      bodyForm.append('description', this.product.description)
-      bodyForm.append('logo', this.product.logo)
-      bodyForm.append('pdf', this.product.pdf)
+      for (let k in this.product) {
+        bodyForm.append(k, this.product[k])
+      }
 
       this.$axios.post('/admin/create/product', bodyForm, {
         headers: {
