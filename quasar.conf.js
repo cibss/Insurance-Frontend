@@ -47,6 +47,7 @@ module.exports = function (ctx) {
     framework: {
       components: [
         'QCheckbox',
+        'QChip',
         'QDialog',
         'QLayout',
         'QLayoutHeader',

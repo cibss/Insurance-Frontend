@@ -3,7 +3,15 @@
     <q-card-title>
       Daftar Produk
       <div slot="right">
-        <q-btn color="primary" label="Tambah Produk Baru" @click="$router.push('/product/new')"/>
+        <div class="row">
+          <q-select
+            v-model="select_type"
+           :options="selectOptions"
+           style="margin-right: 16px"
+           @input="fetchData"
+          />
+          <q-btn color="primary" label="Tambah Produk Baru" @click="$router.push('/product/new')"/>
+        </div>
       </div>
     </q-card-title>
     <q-card-main>
@@ -191,6 +199,21 @@ export default {
           sortable: false
         }
       ],
+      select_type: 0,
+      selectOptions: [
+        {
+          label: 'All',
+          value: 0
+        },
+        {
+          label: 'Insurance',
+          value: 1
+        },
+        {
+          label: 'Investment',
+          value: 2
+        }
+      ],
       rowsPerPage: [
         {
           label: '5',
@@ -229,7 +252,7 @@ export default {
     },
     fetchData () {
       this.loading = true
-      this.$axios.get('/admin/product?page=' + this.pagination.page + '&per_page=' + this.page.rowsPerPage, {
+      this.$axios.get('/admin/product?id_product_type=' + this.select_type + '&page=' + this.pagination.page + '&per_page=' + this.page.rowsPerPage, {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }

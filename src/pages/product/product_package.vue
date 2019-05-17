@@ -3,6 +3,7 @@
     <q-card-title>
       Daftar Produck Package
       <div slot="right">
+        <q-btn flat size="sm" label="kembali" color="primary" @click="$router.back()"/>
         <q-btn @click.native="addPackage" color="primary" label="Tambah Package Baru" />
       </div>
     </q-card-title>

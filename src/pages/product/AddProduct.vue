@@ -97,7 +97,7 @@ export default {
       this.optionParent = res.data.data
     })
 
-    this.$axios.get('/admin/producttype', {
+    this.$axios.get('/admin/producttype?per_page=10', {
       headers: {
         Authorization: JSON.parse(localStorage.getItem('authorization'))
       }
@@ -132,6 +132,7 @@ export default {
             // Available values: 'positive', 'negative', 'warning', 'info'
             color: 'positive'
           })
+          this.$router.back()
           this.loading = false
         })
         .catch(error => {
