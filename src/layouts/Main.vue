@@ -50,6 +50,10 @@
         <q-item-side icon="assessment" class="sidebar-icon" />
         <q-item-main label="Product" />
       </q-item>
+      <q-item to="/customer">
+        <q-item-side icon="assessment" class="sidebar-icon" />
+        <q-item-main label="Customer" />
+      </q-item>
       <q-item to="/packageCustomer">
         <q-item-side icon="assessment" class="sidebar-icon" />
         <q-item-main label="Customer Package" />
