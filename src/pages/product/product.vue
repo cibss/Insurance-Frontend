@@ -24,11 +24,17 @@
         <!-- <q-td key="id" :props="props">
           <span>{{ props.row.id }}</span>
         </q-td> -->
-        <q-td key="brand" :props="props">
-          <img style="max-width: 80px" :src="props.row.logo ? props.row.logo.url : '' ">
+        <q-td key="id" :props="props">
+          <span>{{props.row.id_parent==null?'#'+props.row.id:'' }}</span>
         </q-td>
         <q-td key="name" :props="props">
-          <span>{{ props.row.name }}</span>
+          <span>{{props.row.name }}</span>
+        </q-td>
+        <q-td key="type" :props="props">
+          <span>{{ props.row.id_product_type == 2 ? 'Investment':'Insurance'  }}</span>
+        </q-td>
+        <q-td key="derivative" :props="props">
+          <span>{{ props.row.id_parent }}</span>
         </q-td>
         <q-td key="file" :props="props">
           <q-btn v-if="props.row.pdf" size="sm" round dense color="positive" icon="attachment" @click="openURL(props.row.pdf.url)" />
@@ -139,11 +145,11 @@ export default {
       tableData: [],
       columns: [
         {
-          name: 'brand',
+          name: 'id',
           required: true,
-          label: 'Brand',
+          label: 'ID',
           align: 'left',
-          field: 'logo',
+          field: 'id',
           sortable: true
         },
         {
@@ -155,12 +161,27 @@ export default {
           sortable: true
         },
         {
+          name: 'type',
+          required: true,
+          label: 'Type',
+          align: 'left',
+          field: 'id_product_type',
+          sortable: true
+        },
+        {
+          name: 'derivative',
+          required: true,
+          label: 'Derivative',
+          align: 'left',
+          field: 'id_parent',
+          sortable: true
+        },
+        {
           name: 'file',
           required: true,
           label: 'Document',
           align: 'left',
-          field: 'pdf',
-          sortable: true
+          sortable: false
         },
         {
           name: 'action',

@@ -20,20 +20,12 @@
             <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
-        <img
-          style="max-width: 160px"
-          v-if="selectedImage !== null"
-          :src="selectedImage">
-        <div class="form-group">
-          <span v-if="product.logo.filename == ''">Upload Brand</span>
-          <input
-            ref="foto"
-            accept=".gif,.jpg,.jpeg,.png"
-            @change="upload_logo"
-            type="file"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-        </div>
-        <q-btn
+        <form-upload-img
+          v-model="product.logo"
+          label="Upload Logo"
+          v-if="!loading"/>
+        <form-upload-doc v-model="product.pdf"/>
+        <!-- <q-btn
           v-if="product.pdf.filename != ''"
           icon="attachment"
           color="positive"
@@ -50,7 +42,7 @@
               type="file"/>
               <q-field class="field-input" :error="false" error-label="error this" />
           </div>
-        </div>
+        </div> -->
         <!-- <div class="form-group">
           <span>Status</span>
           <div>
@@ -60,7 +52,7 @@
         </div> -->
         <div style="margin-top: 8px; text-align: center">
           <q-btn style="margin-right: 8px" color="primary" label="update" :loading="loading" @click="updateData" />
-          <q-btn color="secondary" label="batal" :loading="loading" @click="$router.back()" />
+          <q-btn color="secondary" label="batal" @click="$router.back()" />
         </div>
         <q-inner-loading :visible="loading">
           <q-spinner color="secondary" :size="60" />
@@ -71,7 +63,14 @@
 </template>
 
 <script>
+import FormUploadIMG from 'components/FormUploadPhoto.vue'
+import FormUploadDoc from 'components/FormUploadDoc.vue'
+
 export default {
+  components: {
+    'form-upload-doc': FormUploadDoc,
+    'form-upload-img': FormUploadIMG
+  },
   mounted () {
     this.fetchData()
   },

@@ -6,10 +6,17 @@
       </q-card-title>
       <q-card-main>
         <div class="form-group">
+          <span>Type</span>
+          <div>
+            <select v-model="product.id_product_type">
+              <option v-for="v of optionType" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
           <span>Name</span>
           <div>
             <input placeholder="Nama" v-model="product.name"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
         <div class="form-group">
@@ -17,48 +24,33 @@
           <div>
             <textarea placeholder="Deskripsi" v-model="product.description">
             </textarea>
-            <q-field class="field-input" :error="false" error-label="error this" />
           </div>
         </div>
-        <div class="form-group">
-          <span>Parent</span>
-          <div>
-            <select v-model="product.id_parent">
-              <option v-for="v of optionParent" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
-            </select>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-        <div class="form-group">
-          <span>Type</span>
-          <div>
-            <select v-model="product.id_product_type">
-              <option v-for="v of optionType" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
-            </select>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-        <img
-          style="max-width: 160px"
-          v-if="selectedImage !== null"
-          :src="selectedImage">
-        <div class="form-group">
-          <span>Upload Logo</span>
-          <input
-            ref="foto"
-            accept=".gif,.jpg,.jpeg,.png"
-            @change="upload_logo"
-            type="file"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-        </div>
-        <div class="form-group">
+        <form-upload-img
+          v-model="product.logo"
+          label="Upload Logo"
+          v-if="!loading"/>
+        <form-upload-doc v-model="product.pdf"/>
+        <!-- <div class="form-group">
           <span>Upload Document</span>
           <div>
             <input
               ref="pdf"
               @change="upload_pdf"
               type="file"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
+          </div>
+        </div> -->
+        <div class="form-group">
+          <q-checkbox
+            v-model="derivative"
+            color="primary"
+            label="Derivative"
+            left-label
+          />
+          <div v-if="derivative">
+            <select v-model="product.id_parent">
+              <option v-for="v of optionParent" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
+            </select>
           </div>
         </div>
         <div style="margin-top: 8px; text-align: center">
@@ -71,7 +63,14 @@
 </template>
 
 <script scoped>
+import FormUploadIMG from 'components/FormUploadPhoto.vue'
+import FormUploadDoc from 'components/FormUploadDoc.vue'
+
 export default {
+  components: {
+    'form-upload-doc': FormUploadDoc,
+    'form-upload-img': FormUploadIMG
+  },
   data () {
     return {
       product: {
@@ -80,12 +79,13 @@ export default {
         logo: null,
         pdf: null,
         id_parent: 0,
-        id_product_type: 0
+        id_product_type: 1
       },
       optionParent: [{ name: 'Name Product', id: 1 }],
       optionType: [],
       selectedImage: null,
-      loading: false
+      loading: false,
+      derivative: false
     }
   },
   created () {
