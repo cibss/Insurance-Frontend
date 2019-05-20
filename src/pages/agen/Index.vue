@@ -123,20 +123,6 @@
     <q-modal v-model="modalApprove" minimized>
       <div style="padding: 50px">
         <p>Input username & password to appove {{selectedData.first_name}} {{selectedData.last_name}}</p>
-        <div class="form-group">
-          <span>Username</span>
-          <div>
-            <input type="text" placeholder="Username" v-model="selectedData.username"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-        <div class="form-group">
-          <span>Password</span>
-          <div>
-            <input placeholder="Password" v-model="selectedData.password"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
         <div class="btn-confirm">
           <q-btn color="positive" v-close-overlay label="Approve" :loading="loading" @click="approveAgen"/>
           <q-btn color="negative" v-close-overlay label="Reject" @click="rejectAgen" />
@@ -332,8 +318,6 @@ export default {
       this.loading = true
       let bodyForm = new FormData()
       bodyForm.append('id_user', this.selectedData.id)
-      bodyForm.append('username', this.selectedData.username)
-      bodyForm.append('password', this.selectedData.password)
 
       this.$axios.post('/admin/agen/approve', bodyForm, {
         headers: {
