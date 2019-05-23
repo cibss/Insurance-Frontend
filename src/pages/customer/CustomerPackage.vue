@@ -111,15 +111,15 @@
         <div class="q-headline">#{{ selectedData.id }} {{ selectedData.name }}</div>
         <div class="product-data">
           <p>Expired ContractedDate</p>
-          <p class="bold">{{ this.$pl.dateFormat(selectedData.expired_at) }}</p>
+          <input v-model="selectedData.expired_at" type="date" />
         </div>
         <div class="product-data">
           <p>No SPAJ</p>
-          <p class="bold">{{ selectedData.spaj }}</p>
+          <input v-model="selectedData.spaj" />
         </div>
         <div class="product-data">
           <p>No. Polis</p>
-          <p class="bold">{{ selectedData.polis }}</p>
+          <input v-model="selectedData.polis" />
         </div>
         <div class="product-data">
           <p>Tanggal Masuk</p>
@@ -131,43 +131,47 @@
         </div>
         <div class="product-data">
           <p>PaymentDueDate</p>
-          <p class="bold">{{ this.$pl.dateFormat(selectedData.payment_due_at) }}</p>
+          <input v-model="selectedData.payment_due_at" type="date" />
         </div>
-        <div class="product-data">
+       <!-- <div class="product-data">
           <p>Tanggal Pencairan Dana</p>
           <p class="bold">05/08/2018</p>
         </div>
         <div class="product-data">
           <p>Jumlah Dana Dicairkan</p>
           <p class="bold">200.000.000</p>
-        </div>
+        </div> !-->
         <div class="product-data">
           <p>Nominal</p>
-          <p class="bold">{{ selectedData.nominal }}</p>
+          <input v-model="selectedData.nominal" type="number" />
         </div>
         <div class="product-data">
           <p>MGI</p>
-          <p class="bold">{{ selectedData.mgi }} month</p>
+          <input v-model="selectedData.mgi" type="number"/>
         </div>
         <div class="product-data">
           <p>FYP</p>
-          <p class="bold">{{ selectedData.fyp }}</p>
+          <input v-model="selectedData.fyp" type="number" />
         </div>
         <div class="product-data">
           <p>Rate</p>
-          <p class="bold">{{ selectedData.rate }}%</p>
+          <input v-model="selectedData.rate" type="number" />
         </div>
         <div class="product-data">
           <p>Form</p>
           <a :href=" selectedData.form != null ? selectedData.form.url : '' " target="_blank">
             <p class="bold">{{ selectedData.form != null ? selectedData.form.filename : '' }}</p>
           </a>
+          <input @change="onformSelected" type="file">
         </div>
         <div class="product-data">
           <p>Status</p>
-          <p class="bold">{{ selectedData.status }}</p>
+          <select>
+            <option :selected="selectedData.status == v.id" v-for="v of optionStatus" v-bind:key="v.id">{{ v.status }}</option>
+          </select>
         </div>
         <div class="btn-confirm">
+          <q-btn color="primary" v-close-overlay @click.native="submitCustomerPackage" label="submit" />
           <q-btn color="secondary" v-close-overlay label="Close" />
         </div>
       </div>
@@ -227,6 +231,7 @@
 export default {
   data () {
     return {
+      optionStatus: [],
       optionPackage: [],
       approveIdPackage: null,
       selectedData: {},
@@ -304,8 +309,52 @@ export default {
     this.$data.tableFilter.start = start
     this.$data.tableFilter.end = new Date()
     this.fetchData()
+    this.$axios.get('/status', {
+      headers: {
+        'Authorization': JSON.parse(localStorage.getItem('authorization'))
+      }
+    }).then(res => {
+      this.optionStatus = res.data.data
+    })
   },
   methods: {
+    onformSelected (event) {
+      this.selectedData.form = event.target.files[0]
+    },
+    submitCustomerPackage () {
+      let fd = new FormData()
+      fd.append('id_product_package', this.selectedData.id_product_package)
+      fd.append('expired_at', this.selectedData.expired_at)
+      fd.append('payment_due_at', this.selectedData.payment_due_at)
+      fd.append('mgi', this.selectedData.mgi)
+      fd.append('fyp', this.selectedData.fyp)
+      fd.append('rate', this.selectedData.rate)
+      fd.append('nominal', this.selectedData.nominal)
+      fd.append('tenor', this.selectedData.tenor)
+      if (this.selectedData.form) {
+        fd.append('form', this.selectedData.form)
+      }
+      this.$axios.put('/admin/update/customerpackage/' + this.selectedData.id, fd, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization')),
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => {
+        this.$q.notify({
+          message: res.data.message,
+          timeout: 2000,
+          // Available values: 'positive', 'negative', 'warning', 'info'
+          color: 'positive'
+        })
+      }).catch(res => {
+        this.$q.notify({
+          message: res.response.data.message,
+          timeout: 2000,
+          // Available values: 'positive', 'negative', 'warning', 'info'
+          color: 'negative'
+        })
+      })
+    },
     setStatus (id, status) {
       this.loading = true
       if (status === 'approve') {
@@ -357,6 +406,13 @@ export default {
         })
       }
       this[modal] = true
+      if (props.row.expired_at) {
+        props.row.expired_at = this.$pl.dateFormat(props.row.expired_at)
+      }
+      if (props.row.payment_due_at) {
+        props.row.payment_due_at = this.$pl.dateFormat(props.row.payment_due_at)
+      }
+
       this.selectedData = props.row
     },
     fetchData () {
