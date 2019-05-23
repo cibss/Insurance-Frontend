@@ -175,7 +175,10 @@
     <q-modal v-model="modalApprove" minimized>
       <div style="padding: 50px">
         <div class="q-title q-mb-md">Approve {{selectedData.name}}?</div>
-        <p>Approve Customer Package by Click "yes"</p>
+        <select v-model="approveIdPackage">
+          <option v-for="v of optionPackage" v-bind:key="v.id" :value="v.id">{{ v.title }}</option>
+        </select>
+        <p>Approve By Choose Package than "yes"</p>
         <div class="btn-confirm">
           <q-btn color="positive" v-close-overlay label="YES" :loading="loading" @click="setStatus(selectedData.id, 'approve')" />
           <q-btn color="negative" v-close-overlay label="No" />
@@ -224,6 +227,8 @@
 export default {
   data () {
     return {
+      optionPackage: [],
+      approveIdPackage: null,
       selectedData: {},
       modalApprove: false,
       modalReject: false,
@@ -303,6 +308,20 @@ export default {
   methods: {
     setStatus (id, status) {
       this.loading = true
+      if (status === 'approve') {
+        console.log(this.approveIdPackage)
+        if (!this.approveIdPackage) {
+          this.$q.notify({
+            message: 'Pilih Package Terlebih Dahulu',
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'negative'
+          })
+          this.loading = false
+          return
+        }
+        id += '?id_product_package=' + this.approveIdPackage
+      }
       this.$axios.get('/admin/customer/package/' + status + '/' + id, {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
@@ -327,6 +346,16 @@ export default {
       })
     },
     openModal (props, modal) {
+      if (modal === 'modalApprove') {
+        console.log(props)
+        this.$axios.get('/admin/package', {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('authorization'))
+          }
+        }).then(res => {
+          this.optionPackage = res.data.data
+        })
+      }
       this[modal] = true
       this.selectedData = props.row
     },

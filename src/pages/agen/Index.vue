@@ -43,6 +43,7 @@
         <q-td key="status" :props="props">
           <q-icon color="negative" v-if="props.row.status == -6" name="remove_circle" size="16px"/>
           <q-icon color="positive" v-if="props.row.status == 1" name="check_circle" size="16px"/>
+          <span v-if="props.row.status == 5">Menunggu Konfirmasi Calon Agen</span>
         </q-td>
         <q-td key="action" :props="props">
           <!-- <q-btn size="sm" round dense color="secondary" icon="edit" @click="$router.push('/main/sales/detail/'+props.row.id)"/> -->
