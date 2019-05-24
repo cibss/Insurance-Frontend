@@ -202,7 +202,7 @@ export default {
     }
   },
   created () {
-    this.$axios.get('/admin/customer/package', {
+    this.$axios.get('/admin/customer/package?id_customer=' + this.$route.params.id, {
       headers: {
         'Authorization': JSON.parse(localStorage.getItem('authorization'))
       }
