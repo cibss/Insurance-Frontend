@@ -1,146 +1,163 @@
 <template>
+  <div class="">
+    <div class="q-mb-md" @click="$router.back()">
+      <q-icon name="arrow_back"/>
+      <span class="q-ml-sm">Kembali</span>
+    </div>
     <div inline class="row">
-      <q-card class="col-lg-6 col-xs-12">
-        <q-card-title>
-          Detail Customer
-        </q-card-title>
-        <q-card-main>
-          <div class="form-group">
-            <span>Name</span>
-            <div>
-              <input v-model="customer.name" placeholder="Nama"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
+      <div class="col-lg-5 col-xs-12 q-mr-md q-mb-md">
+        <q-card>
+          <q-card-title>
+            Detail Customer
+          </q-card-title>
+          <q-card-main>
+            <div class="form-group">
+              <span>Name</span>
+              <div>
+                <input v-model="customer.name" placeholder="Nama"/>
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>Address</span>
-            <div>
-              <textarea v-model="customer.address"></textarea>
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>Address</span>
+              <div>
+                <textarea v-model="customer.address"></textarea>
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>Birth Date</span>
-            <div>
-              <input v-model="customer.birth_date" type="date" />
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>Birth Date</span>
+              <div>
+                <input v-model="customer.birth_date" type="date" />
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>Phone</span>
-            <div>
-              <input v-model="customer.phone"  />
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>Phone</span>
+              <div>
+                <input v-model="customer.phone"  />
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>Email</span>
-            <div>
-              <input v-model="customer.email"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>Email</span>
+              <div>
+                <input v-model="customer.email"/>
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>NPWP</span>
-            <div>
-              <input v-model="customer.npwp" />
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>NPWP</span>
+              <div>
+                <input v-model="customer.npwp" />
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>Rek Number</span>
-            <div>
-              <input v-model="customer.rekening_number"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>Rek Number</span>
+              <div>
+                <input v-model="customer.rekening_number"/>
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>Sex</span>
-            <div>
-              <select>
-                <option v-for="v of sexOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
-              </select>
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>Sex</span>
+              <div>
+                <select>
+                  <option v-for="v of sexOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
+                </select>
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>Religion</span>
-            <div>
-              <select>
-                <option v-for="v of religionOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
-              </select>
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>Religion</span>
+              <div>
+                <select>
+                  <option v-for="v of religionOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
+                </select>
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>nationality</span>
-            <div>
-              <select>
-                <option v-for="v of nationalityOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
-              </select>
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>nationality</span>
+              <div>
+                <select>
+                  <option v-for="v of nationalityOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
+                </select>
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>ktp</span>
-            <div>
-              <input @change="fileKtp" type="file">
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>ktp</span>
+              <div>
+                <input @change="fileKtp" type="file">
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <span>rekening</span>
-            <div>
-              <input @change="fileRekening" type="file">
-              <q-field class="field-input" :error="false" error-label="error this" />
+            <div class="form-group">
+              <span>rekening</span>
+              <div>
+                <input @change="fileRekening" type="file">
+                <q-field class="field-input" :error="false" error-label="error this" />
+              </div>
             </div>
-          </div>
-          <div style="margin-top: 8px; text-align: center">
-            <q-btn style="margin-right: 8px" color="primary" label="update" @click.native="updateCustomer" :loading="false" />
-            <q-btn color="secondary" label="batal" :loading="false" @click="$router.back()" />
-          </div>
-        </q-card-main>
-      </q-card>
-      <q-card class="col-lg-6 col-xs-12">
-        <h3 style="padding-left:3%;">List Package</h3>
-        <div style="padding:3%;" v-for="v of listPackage" v-bind:key="v.id">
-          <span>
-            #{{v.id}}
-          </span>
-          <span>
-            {{v.title ? v.title : "NOT SET YET"}}
-          </span>-
-          <span>
-            {{ v.status }}
-          </span>-
-          <span>
-            <q-btn size="sm" round dense color="primary" icon="create">
-              <q-popover anchor="bottom right" self="top right">
-                <q-list separator link>
-                  <q-item v-close-overlay @click.native="$router.push('/packageCustomer/detail/'+v.id)">
-                    <q-item-side>
-                      <q-icon name="create"/>
-                    </q-item-side>
-                    <q-item-main label="Detail" />
-                  </q-item>
-                  <q-item v-close-overlay @click.native="openModal(v, 'modalApprove')">
-                    <q-item-side>
-                      <q-icon name="check_circle"/>
-                    </q-item-side>
-                    <q-item-main label="Approve" />
-                  </q-item>
-                  <q-item v-close-overlay @click.native="openModal(v, 'modalReject')" >
-                    <q-item-side>
-                      <q-icon name="cancel"/>
-                    </q-item-side>
-                    <q-item-main label="Reject" />
-                  </q-item>
-                </q-list>
-              </q-popover>
-            </q-btn>
-          </span>
-        </div>
-      </q-card>
+            <div style="margin-top: 8px; text-align: center">
+              <q-btn style="margin-right: 8px" color="primary" label="update" @click.native="updateCustomer" :loading="false" />
+              <q-btn color="secondary" label="batal" :loading="false" @click="$router.back()" />
+            </div>
+          </q-card-main>
+        </q-card>
+      </div>
+
+      <div class="col-lg-5 col-xs-12">
+        <q-card>
+          <q-card-title>
+            List Package
+          </q-card-title>
+          <q-card-main>
+            <q-list no-border separator>
+              <q-item v-for="v of listPackage" v-bind:key="v.id">
+                <q-item-side>
+                  <q-icon name="assignment"/>
+                </q-item-side>
+                <q-item-main :label="v.title" />
+                <q-item-side right>
+                  <span class="q-mr-xl">{{v.status}}</span>
+                  <q-btn size="sm" round dense color="primary" icon="create">
+                    <q-popover anchor="bottom right" self="top right">
+                      <q-list separator link>
+                        <q-item v-close-overlay @click.native="$router.push('/packageCustomer/detail/'+v.id)">
+                          <q-item-side>
+                            <q-icon name="create"/>
+                          </q-item-side>
+                          <q-item-main label="Detail" />
+                        </q-item>
+                        <q-item v-close-overlay @click.native="openModal(v, 'modalApprove')">
+                          <q-item-side>
+                            <q-icon name="check_circle"/>
+                          </q-item-side>
+                          <q-item-main label="Approve" />
+                        </q-item>
+                        <q-item v-close-overlay @click.native="openModal(v, 'modalReject')" >
+                          <q-item-side>
+                            <q-icon name="cancel"/>
+                          </q-item-side>
+                          <q-item-main label="Reject" />
+                        </q-item>
+                      </q-list>
+                    </q-popover>
+                  </q-btn>
+                </q-item-side>
+              </q-item>
+              <q-item v-if="listPackage.length == 0">
+                <span style="color:grey">Belum ada data</span>
+              </q-item>
+            </q-list>
+          </q-card-main>
+
+        </q-card>
+      </div>
+
       <q-modal v-model="modalApprove" minimized>
         <div style="padding: 50px">
           <div class="q-title q-mb-md">Approve {{selectedData.first_name}}?</div>
@@ -166,6 +183,7 @@
         </div>
       </q-modal>
     </div>
+  </div>
 </template>
 
 <script>
