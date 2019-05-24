@@ -48,10 +48,10 @@
         <q-item-side icon="assignment_ind" class="sidebar-icon" />
         <q-item-main label="Customer" />
       </q-item>
-      <q-item to="/packageCustomer">
+      <!-- <q-item to="/packageCustomer">
         <q-item-side icon="assignment" class="sidebar-icon" />
         <q-item-main label="Customer Package" />
-      </q-item>
+      </q-item> -->
       <q-item to="/agen">
         <q-item-side icon="people" class="sidebar-icon" />
         <q-item-main label="Agen" />
