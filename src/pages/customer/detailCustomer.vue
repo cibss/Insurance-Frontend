@@ -1,6 +1,6 @@
 <template>
     <div inline class="row">
-      <q-card class="col-lg-6">
+      <q-card class="col-lg-6 col-xs-12">
         <q-card-title>
           Detail Customer
         </q-card-title>
@@ -101,12 +101,66 @@
           </div>
         </q-card-main>
       </q-card>
+      <q-card class="col-lg-6 col-xs-12">
+        <h3 style="padding-left:3%;">List Package</h3>
+        <div style="padding:3%;" v-for="v of listPackage" v-bind:key="v.id">
+          <span>
+            #{{v.id}}
+          </span>
+          <span>
+            {{v.title ? v.title : "NOT SET YET"}}
+          </span>-
+          <span>
+            {{ v.status }}
+          </span>-
+          <span>
+            <q-btn size="sm" round dense color="primary" icon="create">
+              <q-popover anchor="bottom right" self="top right">
+                <q-list separator link>
+                  <q-item v-close-overlay @click.native="$router.push('/packageCustomer/detail/'+v.id)">
+                    <q-item-side>
+                      <q-icon name="create"/>
+                    </q-item-side>
+                    <q-item-main label="Detail" />
+                  </q-item>
+                  <q-item v-close-overlay @click.native="openModal(v, 'modalApprove')">
+                    <q-item-side>
+                      <q-icon name="check_circle"/>
+                    </q-item-side>
+                    <q-item-main label="Approve" />
+                  </q-item>
+                  <q-item v-close-overlay @click.native="openModal(v, 'modalReject')" >
+                    <q-item-side>
+                      <q-icon name="cancel"/>
+                    </q-item-side>
+                    <q-item-main label="Reject" />
+                  </q-item>
+                </q-list>
+              </q-popover>
+            </q-btn>
+          </span>
+        </div>
+      </q-card>
       <q-modal v-model="modalApprove" minimized>
         <div style="padding: 50px">
           <div class="q-title q-mb-md">Approve {{selectedData.first_name}}?</div>
+        <select v-model="approveIdPackage">
+          <option v-for="v of optionPackage" v-bind:key="v.id" :value="v.id">{{ v.title }}</option>
+        </select>
+          <p>Action will be performed to this data by click "Approve"</p>
+          <div class="btn-confirm">
+            <q-btn color="positive" v-close-overlay label="Approve" @click.native="setStatus(selectedCustomerPackage.id, 'approve')" />
+            <q-btn color="secondary" v-close-overlay label="Cancel" />
+          </div>
+        </div>
+      </q-modal>
+      <q-modal v-model="modalReject" minimized>
+        <div style="padding: 50px">
+          <div class="q-title q-mb-md">Reject {{selectedData.first_name}}?</div>
+          <textarea v-model="rejectDesc" placeholder="Reject Description"></textarea>
           <p>Action will be performed to this data by click "Reject"</p>
           <div class="btn-confirm">
-            <q-btn color="positive" v-close-overlay label="Approve" @click.native="setStatus('approve')" />
+            <q-btn color="negative" v-close-overlay label="Reject" @click.native="setStatus(selectedCustomerPackage.id, 'reject')" />
             <q-btn color="secondary" v-close-overlay label="Cancel" />
           </div>
         </div>
@@ -133,15 +187,28 @@ export default {
         ktp: null,
         rekening: null
       },
+      approveIdPackage: null,
+      rejectDesc: '',
+      selectedCustomerPackage: {},
+      optionPackage: [],
+      listPackage: [],
       sexOpstions: [],
       religionOpstions: [],
       nationalityOpstions: [],
       selectedData: {},
       modalApprove: false,
+      modalReject: false,
       searchMember: false
     }
   },
   created () {
+    this.$axios.get('/admin/customer/package', {
+      headers: {
+        'Authorization': JSON.parse(localStorage.getItem('authorization'))
+      }
+    }).then(res => {
+      this.listPackage = res.data.data
+    })
     this.$axios.get('/admin/customer?id=' + this.$route.params.id, {
       headers: {
         'Authorization': JSON.parse(localStorage.getItem('authorization'))
@@ -173,6 +240,59 @@ export default {
     })
   },
   methods: {
+    setStatus (id, status) {
+      if (status === 'approve') {
+        if (!this.approveIdPackage) {
+          this.$q.notify({
+            message: 'Pilih Package Terlebih Dahulu',
+            timeout: 2000,
+            // Available values: 'positive', 'negative', 'warning', 'info'
+            color: 'negative'
+          })
+          return
+        }
+        id += '?id_product_package=' + this.approveIdPackage
+      } else {
+        id += '?reject_desc=' + this.rejectDesc
+      }
+      this.$axios.get('/admin/customer/package/' + status + '/' + id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        this.$q.notify({
+          message: res.data.message,
+          timeout: 2000,
+          // Available values: 'positive', 'negative', 'warning', 'info'
+          color: 'positive'
+        })
+        this.loading = false
+        this.fetchData()
+      }).catch(error => {
+        this.$q.notify({
+          message: error.response.data.message,
+          timeout: 2000,
+          // Available values: 'positive', 'negative', 'warning', 'info'
+          color: 'negative'
+        })
+        this.loading = false
+      })
+    },
+    openModal (row, modal) {
+      if (modal === 'modalApprove') {
+        this.modalApprove = true
+        this.$axios.get('/admin/package', {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('authorization'))
+          }
+        }).then(res => {
+          this.optionPackage = res.data.data
+        })
+      } else {
+        this.modalReject = true
+      }
+      this.selectedCustomerPackage = row
+    },
     fileKtp (foto) {
       this.customer.ktp = foto.target.files[0]
     },
@@ -192,10 +312,6 @@ export default {
       }).then(res => {
         console.log(res)
       })
-    },
-    openApprove (props) {
-      this.modalApprove = true
-      this.selectedData = props.row
     }
   }
 }

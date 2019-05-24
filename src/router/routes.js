@@ -17,6 +17,7 @@ const routes = [
       { path: '/customer', component: () => import('pages/customer/Customer.vue') },
       { path: '/customer/detail/:id', component: () => import('pages/customer/detailCustomer.vue') },
       { path: '/packageCustomer', component: () => import('pages/customer/CustomerPackage.vue') },
+      { path: '/packageCustomer/detail/:id', component: () => import('pages/customer/detailCustomerPackage.vue') },
       { path: '/product', component: () => import('pages/product/product.vue') },
       { path: '/product/new', component: () => import('pages/product/AddProduct.vue') },
       { path: '/product/:id_product/package/new', component: () => import('pages/product/AddPackage.vue') },
