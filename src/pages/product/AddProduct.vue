@@ -1,64 +1,70 @@
 <template>
-  <div inline class="row">
-    <q-card class="col-lg-6">
-      <q-card-title>
-        Tambah Produk Privilege Club
-      </q-card-title>
-      <q-card-main>
-        <div class="form-group">
-          <span>Type</span>
-          <div>
-            <select v-model="product.id_product_type">
-              <option v-for="v of optionType" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
-            </select>
+  <div>
+    <div class="q-mb-md" @click="$router.back()">
+      <q-icon name="arrow_back"/>
+      <span class="q-ml-sm">Kembali</span>
+    </div>
+    <div inline class="row">
+      <q-card class="col-lg-6">
+        <q-card-title>
+          Tambah Produk Privilege Club
+        </q-card-title>
+        <q-card-main>
+          <div class="form-group">
+            <span>Type</span>
+            <div>
+              <select v-model="product.id_product_type">
+                <option v-for="v of optionType" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <span>Name</span>
-          <div>
-            <input placeholder="Nama" v-model="product.name"/>
+          <div class="form-group">
+            <span>Name</span>
+            <div>
+              <input placeholder="Nama" v-model="product.name"/>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <span>Description</span>
-          <div>
-            <textarea placeholder="Deskripsi" v-model="product.description">
-            </textarea>
+          <div class="form-group">
+            <span>Description</span>
+            <div>
+              <textarea placeholder="Deskripsi" v-model="product.description">
+              </textarea>
+            </div>
           </div>
-        </div>
-        <form-upload-img
-          v-model="product.logo"
-          label="Upload Logo"
-          v-if="!loading"/>
-        <form-upload-doc v-model="product.pdf"/>
-        <!-- <div class="form-group">
-          <span>Upload Document</span>
-          <div>
-            <input
-              ref="pdf"
-              @change="upload_pdf"
-              type="file"/>
+          <form-upload-img
+            v-model="product.logo"
+            label="Upload Logo"
+            v-if="!loading"/>
+          <form-upload-doc v-model="product.pdf"/>
+          <!-- <div class="form-group">
+            <span>Upload Document</span>
+            <div>
+              <input
+                ref="pdf"
+                @change="upload_pdf"
+                type="file"/>
+            </div>
+          </div> -->
+          <div class="form-group">
+            <q-checkbox
+              v-model="derivative"
+              color="primary"
+              label="Derivative"
+              left-label
+            />
+            <div v-if="derivative">
+              <select v-model="product.id_parent">
+                <option v-for="v of optionParent" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
+              </select>
+            </div>
           </div>
-        </div> -->
-        <div class="form-group">
-          <q-checkbox
-            v-model="derivative"
-            color="primary"
-            label="Derivative"
-            left-label
-          />
-          <div v-if="derivative">
-            <select v-model="product.id_parent">
-              <option v-for="v of optionParent" v-bind:key="v.id" :value="v.id">{{v.name}}</option>
-            </select>
+          <div style="margin-top: 8px; text-align: center">
+            <q-btn style="margin-right: 8px" color="primary" label="tambah" :loading="loading" @click="addProduct" />
+            <q-btn color="secondary" label="batal" @click="$router.back()" />
           </div>
-        </div>
-        <div style="margin-top: 8px; text-align: center">
-          <q-btn style="margin-right: 8px" color="primary" label="tambah" :loading="loading" @click="addProduct" />
-          <q-btn color="secondary" label="batal" @click="$router.back()" />
-        </div>
-      </q-card-main>
-    </q-card>
+        </q-card-main>
+      </q-card>
+    </div>
   </div>
 </template>
 

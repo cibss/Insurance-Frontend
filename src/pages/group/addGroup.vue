@@ -1,53 +1,59 @@
 <template>
-  <div inline class="row">
-    <q-card class="col-lg-6">
-      <q-card-title>
-        Tambah Group Privilege Club
-      </q-card-title>
-      <q-card-main>
-        <div class="form-group">
-          <span>Name</span>
-          <div>
-            <input v-model="name" placeholder="Name"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-       <!-- <div class="form-group">
-          <span>Team Leader</span>
-          <div>
-            <input placeholder="Cari Nama Agen"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div> -->
-        <div style="margin-top: 8px; text-align: center">
-          <q-btn style="margin-right: 8px" color="primary" @click.native="addGroup" label="tambah" :loading="loadingBtnAddGroup" />
-          <q-btn color="secondary" label="batal" :loading="false" @click="$router.back()" />
-        </div>
-      </q-card-main>
-    </q-card>
-    <!-- <div class="col-lg-1">
+  <div>
+    <div class="q-mb-md" @click="$router.back()">
+      <q-icon name="arrow_back"/>
+      <span class="q-ml-sm">Kembali</span>
     </div>
-    <q-card class="col-lg-5">
-      <q-card-title>
-        Import Excel
-      </q-card-title>
-      <q-card-main>
-        <div class="form-group" style="margin-bottom:18px;">
-          <q-btn @click="getTemplate" style="margin-right: 8px" color="primary" label="Get Template" :loading="btnGetTemplate" />
-        </div>
-        <div class="form-group">
-          <span>Name</span>
-          <div>
-            <input type="file" @change="upload_excel" accept=".xlsx"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
+    <div inline class="row">
+      <q-card class="col-lg-6">
+        <q-card-title>
+          Tambah Group Privilege Club
+        </q-card-title>
+        <q-card-main>
+          <div class="form-group">
+            <span>Name</span>
+            <div>
+              <input v-model="name" placeholder="Name"/>
+              <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
           </div>
-        </div>
-        <div style="margin-top: 8px; text-align: center">
-          <q-btn style="margin-right: 8px" color="primary" label="tambah" @click="postImport" :loading="false" />
-          <q-btn color="secondary" label="batal" :loading="loading" @click="$router.back()" />
-        </div>
-      </q-card-main>
-    </q-card> -->
+        <!-- <div class="form-group">
+            <span>Team Leader</span>
+            <div>
+              <input placeholder="Cari Nama Agen"/>
+              <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
+          </div> -->
+          <div style="margin-top: 8px; text-align: center">
+            <q-btn style="margin-right: 8px" color="primary" @click.native="addGroup" label="tambah" :loading="loadingBtnAddGroup" />
+            <q-btn color="secondary" label="batal" :loading="false" @click="$router.back()" />
+          </div>
+        </q-card-main>
+      </q-card>
+      <!-- <div class="col-lg-1">
+      </div>
+      <q-card class="col-lg-5">
+        <q-card-title>
+          Import Excel
+        </q-card-title>
+        <q-card-main>
+          <div class="form-group" style="margin-bottom:18px;">
+            <q-btn @click="getTemplate" style="margin-right: 8px" color="primary" label="Get Template" :loading="btnGetTemplate" />
+          </div>
+          <div class="form-group">
+            <span>Name</span>
+            <div>
+              <input type="file" @change="upload_excel" accept=".xlsx"/>
+              <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
+          </div>
+          <div style="margin-top: 8px; text-align: center">
+            <q-btn style="margin-right: 8px" color="primary" label="tambah" @click="postImport" :loading="false" />
+            <q-btn color="secondary" label="batal" :loading="loading" @click="$router.back()" />
+          </div>
+        </q-card-main>
+      </q-card> -->
+    </div>
   </div>
 </template>
 

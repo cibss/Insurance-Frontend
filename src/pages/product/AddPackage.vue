@@ -1,42 +1,48 @@
 <template>
-  <div inline class="row">
-    <q-card class="col-lg-6">
-      <q-card-title>
-        Tambah Produk Privilege Club
-      </q-card-title>
-      <q-card-main>
-        <div class="form-group">
-          <span>Name</span>
-          <div>
-            <input placeholder="Nama" v-model="productPackage.name"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
+  <div>
+    <div class="q-mb-md" @click="$router.back()">
+      <q-icon name="arrow_back"/>
+      <span class="q-ml-sm">Kembali</span>
+    </div>
+    <div inline class="row">
+      <q-card class="col-lg-6">
+        <q-card-title>
+          Tambah Produk Privilege Club
+        </q-card-title>
+        <q-card-main>
+          <div class="form-group">
+            <span>Name</span>
+            <div>
+              <input placeholder="Nama" v-model="productPackage.name"/>
+              <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <span>Description</span>
-          <div>
-            <textarea placeholder="Deskripsi" v-model="productPackage.description">
-            </textarea>
-            <q-field class="field-input" :error="false" error-label="error this" />
+          <div class="form-group">
+            <span>Description</span>
+            <div>
+              <textarea placeholder="Deskripsi" v-model="productPackage.description">
+              </textarea>
+              <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <span>Price</span>
-          <div>
-            <input type="number" placeholder="Price" v-model="productPackage.price"/>
-            <q-field  class="field-input" :error="false" error-label="error this" />
+          <div class="form-group">
+            <span>Price</span>
+            <div>
+              <input type="number" placeholder="Price" v-model="productPackage.price"/>
+              <q-field  class="field-input" :error="false" error-label="error this" />
+            </div>
           </div>
-        </div>
-        <img
-          style="max-width: 160px"
-          v-if="selectedImage !== null"
-          :src="selectedImage">
-        <div style="margin-top: 8px; text-align: center">
-          <q-btn style="margin-right: 8px" color="primary" label="tambah" :loading="loading" @click="addProduct" />
-          <q-btn color="secondary" label="batal" @click="$router.back()" />
-        </div>
-      </q-card-main>
-    </q-card>
+          <img
+            style="max-width: 160px"
+            v-if="selectedImage !== null"
+            :src="selectedImage">
+          <div style="margin-top: 8px; text-align: center">
+            <q-btn style="margin-right: 8px" color="primary" label="tambah" :loading="loading" @click="addProduct" />
+            <q-btn color="secondary" label="batal" @click="$router.back()" />
+          </div>
+        </q-card-main>
+      </q-card>
+    </div>
   </div>
 </template>
 
