@@ -297,9 +297,10 @@ export default {
       })
     },
     openModal (row, modal) {
+      console.log(row)
       if (modal === 'modalApprove') {
         this.modalApprove = true
-        this.$axios.get('/admin/package', {
+        this.$axios.get('/admin/package?id_product=' + row.id_product, {
           headers: {
             'Authorization': JSON.parse(localStorage.getItem('authorization'))
           }
