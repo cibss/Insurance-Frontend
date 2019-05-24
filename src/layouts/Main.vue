@@ -99,7 +99,7 @@ export default {
       leftDrawerOpen: true,
       rightDrawer: true,
       notif: [],
-      user: {}
+      user: JSON.parse(localStorage.getItem('user'))
     }
   },
   methods: {
