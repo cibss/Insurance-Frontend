@@ -1,12 +1,11 @@
 <template>
   <div style="padding: 36px; position:relative">
-    <q-btn
-      flat
-      icon="arrow_back"
-      size="lg"
-      @click.native="$router.back()"
-      style="position:absolute; right:-8px; top:0;"/>
-    <div class="q-headline">#{{ customerPackage.id }} {{ customerPackage.name }}</div>
+    <div class="q-mb-md" @click="$router.back()">
+      <q-icon name="arrow_back"/>
+      <span class="q-ml-sm">Kembali</span>
+    </div>
+    <div class="q-headline" style="margin-bottom:15px;">#{{ customerPackage.id }} {{ customerPackage.name }}</div>
+    <q-card>
     <div class="product-data">
       <p>Expired ContractedDate</p>
       <input v-model="customerPackage.expired_at" type="date" />
@@ -72,10 +71,11 @@
         <option :selected="customerPackage.status == v.id" v-for="v of optionStatus" v-bind:key="v.id">{{ v.status }}</option>
       </select>
     </div>
-    <div class="btn-confirm">
+    <div class="btn-confirm" style="padding-bottom:20px;">
       <q-btn color="primary" v-close-overlay @click.native="submitcustomerPackage" label="submit" />
       <q-btn color="secondary" v-close-overlay label="Close" />
     </div>
+    </q-card>
   </div>
 
 </template>
@@ -92,9 +92,6 @@
     margin:auto;
     padding:15px;
     padding-left:30px;
-  }
-  .product-data:nth-child(even){
-    background:#efefef;
   }
   .product-data > p {
     margin-bottom:8px;
