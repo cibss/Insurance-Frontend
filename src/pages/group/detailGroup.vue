@@ -1,4 +1,9 @@
 <template>
+  <div>
+    <div class="q-mb-md" @click="$router.back()">
+      <q-icon name="arrow_back"/>
+      <span class="q-ml-sm">Kembali</span>
+    </div>
     <div inline class="row">
       <q-card class="col-lg-6">
         <q-card-title>
@@ -103,6 +108,7 @@
         </div>
       </q-modal>
     </div>
+  </div>
 </template>
 
 <script>

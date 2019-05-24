@@ -1,64 +1,70 @@
 <template>
-  <div inline class="row">
-    <q-card class="col-lg-6">
-      <q-card-title>
-        Detail Product
-      </q-card-title>
-      <q-card-main>
-        <div class="form-group">
-          <span>Name</span>
-          <div>
-            <input placeholder="Nama" v-model="product.name"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-        <div class="form-group">
-          <span>Description</span>
-          <div>
-            <textarea placeholder="Deskripsi" v-model="product.description">
-            </textarea>
-            <q-field class="field-input" :error="false" error-label="error this" />
-          </div>
-        </div>
-        <form-upload-img
-          v-model="product.logo"
-          label="Upload Logo"
-          v-if="!loading"/>
-        <form-upload-doc v-model="product.pdf"/>
-        <!-- <q-btn
-          v-if="product.pdf.filename != ''"
-          icon="attachment"
-          color="positive"
-          label="lihat dokumen"
-          size="12px"
-          style="margin-bottom: 8px"
-          @click="openURL"/>
-        <div class="form-group">
-          <span v-if="product.pdf.filename == ''">Upload Document</span>
-          <div>
-            <input
-              ref="pdf"
-              @change="upload_pdf"
-              type="file"/>
+  <div>
+    <div class="q-mb-md" @click="$router.back()">
+      <q-icon name="arrow_back"/>
+      <span class="q-ml-sm">Kembali</span>
+    </div>
+    <div inline class="row">
+      <q-card class="col-lg-6">
+        <q-card-title>
+          Detail Product
+        </q-card-title>
+        <q-card-main>
+          <div class="form-group">
+            <span>Name</span>
+            <div>
+              <input placeholder="Nama" v-model="product.name"/>
               <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
           </div>
-        </div> -->
-        <!-- <div class="form-group">
-          <span>Status</span>
-          <div>
-            <input placeholder="Status"/>
-            <q-field class="field-input" :error="false" error-label="error this" />
+          <div class="form-group">
+            <span>Description</span>
+            <div>
+              <textarea placeholder="Deskripsi" v-model="product.description">
+              </textarea>
+              <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
           </div>
-        </div> -->
-        <div style="margin-top: 8px; text-align: center">
-          <q-btn style="margin-right: 8px" color="primary" label="update" :loading="loading" @click="updateData" />
-          <q-btn color="secondary" label="batal" @click="$router.back()" />
-        </div>
-        <q-inner-loading :visible="loading">
-          <q-spinner color="secondary" :size="60" />
-        </q-inner-loading>
-      </q-card-main>
-    </q-card>
+          <form-upload-img
+            v-model="product.logo"
+            label="Upload Logo"
+            v-if="!loading"/>
+          <form-upload-doc v-model="product.pdf"/>
+          <!-- <q-btn
+            v-if="product.pdf.filename != ''"
+            icon="attachment"
+            color="positive"
+            label="lihat dokumen"
+            size="12px"
+            style="margin-bottom: 8px"
+            @click="openURL"/>
+          <div class="form-group">
+            <span v-if="product.pdf.filename == ''">Upload Document</span>
+            <div>
+              <input
+                ref="pdf"
+                @change="upload_pdf"
+                type="file"/>
+                <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
+          </div> -->
+          <!-- <div class="form-group">
+            <span>Status</span>
+            <div>
+              <input placeholder="Status"/>
+              <q-field class="field-input" :error="false" error-label="error this" />
+            </div>
+          </div> -->
+          <div style="margin-top: 8px; text-align: center">
+            <q-btn style="margin-right: 8px" color="primary" label="update" :loading="loading" @click="updateData" />
+            <q-btn color="secondary" label="batal" @click="$router.back()" />
+          </div>
+          <q-inner-loading :visible="loading">
+            <q-spinner color="secondary" :size="60" />
+          </q-inner-loading>
+        </q-card-main>
+      </q-card>
+    </div>
   </div>
 </template>
 
@@ -97,7 +103,7 @@ export default {
         console.log(res.data.data[0])
         if (res.data.success) {
           this.product = res.data.data[0]
-          if (this.product.logo.filename !== '') {
+          if (this.product.logo) {
             this.selectedImage = this.product.logo.url
           }
         } else {
