@@ -8,12 +8,6 @@
         >
           <input v-model="search" placeholde="search">
         </div>
-        <q-select
-           style="margin-right: 16px"
-            v-model="search_column"
-           :options="searchColOption"
-           @input="fetchData"
-          />
         <q-btn
         icon="search" @click="searchClick" />
       </div>
@@ -158,7 +152,6 @@ export default {
     return {
       selectedData: {},
       search: '',
-      search_column: 'name',
       opened: false,
       pagination: {
         page: 1,
@@ -282,7 +275,7 @@ export default {
         {
           params: {
             search: this.search,
-            search_column: this.search_column
+            search_column: 'all'
           },
           headers: {
             'Authorization': JSON.parse(localStorage.getItem('authorization'))

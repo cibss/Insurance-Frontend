@@ -1,7 +1,16 @@
 <template>
   <div inline class="w-full">
-    <q-card-title>
       Daftar Group
+    <q-card-title>
+      <div class="row" >
+          <div
+            style="margin-right: 16px"
+          >
+          <input v-model="search" placeholde="search">
+        </div>
+        <q-btn
+        icon="search" @click="searchClick" />
+      </div>
       <div slot="right">
         <div class="row">
           <q-select
@@ -33,8 +42,8 @@
         <!-- <q-td key="id" :props="props">
           <span>{{ props.row.id }}</span>
         </q-td> -->
-        <q-td key="id_admin" :id_admin="props">
-          <span>{{ props.row.id_admin }}</span>
+        <q-td key="id" :id="props">
+          <span>#{{ props.row.id }}</span>
         </q-td>
         <q-td key="name" :name="props">
           <span>{{ props.row.name }}</span>
@@ -149,6 +158,7 @@ export default {
   data () {
     return {
       selectedData: {},
+      search: '',
       modalDelete: false,
       modalApprove: false,
       pagination: {
@@ -175,24 +185,22 @@ export default {
       tableData: [
         {
           id: '1',
-          id_admin: '1',
           name: 'AHHA TEAM',
           status: '1'
         },
         {
           id: '2',
-          id_admin: '2',
           name: 'Arisan Ibu2',
           status: '2'
         }
       ],
       columns: [
         {
-          name: 'id_admin',
+          name: 'id',
           required: true,
-          label: 'Id_Admin',
+          label: 'Id',
           align: 'left',
-          field: 'id_admin',
+          field: 'id',
           sortable: true
         },
         {
@@ -257,6 +265,9 @@ export default {
     this.fetchData()
   },
   methods: {
+    searchClick () {
+      this.fetchData()
+    },
     approveGroup () {
       this.$axios.get('/admin/group/approve/' + this.selectedData.id, {
         headers: {
@@ -297,7 +308,7 @@ export default {
       fd.append('only_header', 'false')
       fd.append('cols[]', 'name')
       fd.append('cols[]', 'status')
-      fd.append('cols[]', 'id_admin')
+      fd.append('cols[]', 'id')
       this.$axios.post('/admin/export', fd, {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
@@ -320,6 +331,10 @@ export default {
     fetchData () {
       this.loading = true
       this.$axios.get('/admin/group?page=' + this.pagination.page + '&per_page=' + this.page.rowsPerPage, {
+        params: {
+          search: this.search,
+          search_column: 'all'
+        },
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }

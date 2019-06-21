@@ -1,7 +1,16 @@
 <template>
   <div inline class="w-full">
-    <q-card-title>
       Daftar Agen
+    <q-card-title>
+      <div class="row" >
+        <div
+            style="margin-right: 16px"
+          >
+          <input v-model="search" placeholde="search">
+        </div>
+        <q-btn
+        icon="search" @click="searchClick" />
+      </div>
       <div slot="right">
         <div class="row">
           <q-select
@@ -149,6 +158,7 @@ export default {
   name: 'PageIndex',
   data () {
     return {
+      search: '',
       selectedData: {},
       modalDelete: false,
       modalApprove: false,
@@ -252,6 +262,9 @@ export default {
     this.fetchData()
   },
   methods: {
+    searchClick () {
+      this.fetchData()
+    },
     openDelete (props) {
       this.modalDelete = true
       this.selectedData = props.row
@@ -264,6 +277,10 @@ export default {
     fetchData () {
       this.loading = true
       this.$axios.get('/admin/agen?status=' + this.select + '&page=' + this.pagination.page + '&per_page=' + this.page.rowsPerPage, {
+        params: {
+          search: this.search,
+          search_column: 'all'
+        },
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }
