@@ -1,7 +1,22 @@
 <template>
   <div inline class="w-full">
-    <q-card-title>
       Daftar Produk
+    <q-card-title>
+      <div class="row" >
+        <div
+           style="margin-right: 16px"
+        >
+          <input v-model="search" placeholde="search">
+        </div>
+        <q-select
+           style="margin-right: 16px"
+            v-model="search_column"
+           :options="searchColOption"
+           @input="fetchData"
+          />
+        <q-btn
+        icon="search" @click="searchClick" />
+      </div>
       <div slot="right">
         <div class="row">
           <q-select
@@ -142,6 +157,8 @@ export default {
   data () {
     return {
       selectedData: {},
+      search: '',
+      search_column: 'name',
       opened: false,
       pagination: {
         page: 1,
@@ -214,6 +231,12 @@ export default {
           value: 2
         }
       ],
+      searchColOption: [
+        {
+          label: 'Name',
+          value: 'name'
+        }
+      ],
       rowsPerPage: [
         {
           label: '5',
@@ -246,17 +269,25 @@ export default {
     this.fetchData()
   },
   methods: {
+    searchClick () {
+      this.fetchData()
+    },
     openModal (props) {
       this.opened = true
       this.selectedData = props.row
     },
     fetchData () {
       this.loading = true
-      this.$axios.get('/admin/product?id_product_type=' + this.select_type + '&page=' + this.pagination.page + '&per_page=' + this.page.rowsPerPage, {
-        headers: {
-          'Authorization': JSON.parse(localStorage.getItem('authorization'))
-        }
-      }).then(res => {
+      this.$axios.get('/admin/product?id_product_type=' + this.select_type + '&page=' + this.pagination.page + '&per_page=' + this.page.rowsPerPage,
+        {
+          params: {
+            search: this.search,
+            search_column: this.search_column
+          },
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('authorization'))
+          }
+        }).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data
           if (res.data.pagination.is_last === 1) {
