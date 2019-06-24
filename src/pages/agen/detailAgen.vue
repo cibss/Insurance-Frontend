@@ -90,6 +90,30 @@
           </div>
         </q-card-main>
       </q-card>
+      <div class="col-lg-6">
+        <h5>Team</h5>
+        <q-card>
+          <q-card-title>
+            {{ team.team_direct_leader.first_name }}
+            <div slot="subtitle">Direct Leader</div>
+          </q-card-title>
+        </q-card>
+
+        <q-card v-for="v of team.team_leaders " v-bind:key="v.id">
+          <q-card-title>
+            {{ v.first_name }}
+            <div slot="subtitle">Leader</div>
+          </q-card-title>
+        </q-card>
+
+        <q-card v-for="v of team.team_members " v-bind:key="v.id">
+          <q-card-title>
+            {{ v.first_name }}
+            <div slot="subtitle">Member</div>
+          </q-card-title>
+        </q-card>
+
+      </div>
       <q-inner-loading :visible="loading">
         <q-spinner color="secondary" :size="60" />
       </q-inner-loading>
@@ -107,7 +131,8 @@ export default {
   data () {
     return {
       loading: false,
-      agent: {}
+      agent: {},
+      team: {}
     }
   },
   mounted () {
@@ -116,6 +141,12 @@ export default {
   methods: {
     fetchData () {
       this.loading = true
+      this.$axios.get('/team?id_user=' + this.$route.params.id, {
+      }).then(res => {
+        let data = res.data.data
+        console.log(data)
+        this.team = data
+      })
       this.$axios.get('/admin/agen?id=' + this.$route.params.id, {
         headers: {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
