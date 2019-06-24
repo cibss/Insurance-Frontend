@@ -6,121 +6,113 @@
     </div>
     <div inline class="row">
       <div class="col-lg-5 col-xs-12 q-mr-md q-mb-md">
-        <q-card>
+        <q-card class="relative-position">
           <q-card-title>
             Detail Customer
           </q-card-title>
           <q-card-main>
-            <div class="form-group">
-              <span>Name</span>
-              <div>
-                <input v-model="customer.name" placeholder="Nama"/>
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>Address</span>
-              <div>
-                <textarea v-model="customer.address"></textarea>
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>Birth Date</span>
-              <div>
-                <input v-model="customer.birth_date" type="date" />
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>Phone</span>
-              <div>
-                <input v-model="customer.phone"  />
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>Email</span>
-              <div>
-                <input v-model="customer.email"/>
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>NPWP</span>
-              <div>
-                <input v-model="customer.npwp" />
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>Rek Number</span>
-              <div>
-                <input v-model="customer.rekening_number"/>
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>Sex</span>
-              <div>
-                <select>
-                  <option v-for="v of sexOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
-                </select>
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>Religion</span>
-              <div>
-                <select>
-                  <option v-for="v of religionOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
-                </select>
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>nationality</span>
-              <div>
-                <select>
-                  <option v-for="v of nationalityOpstions" v-bind:key="v.id" :value="v.id">{{ v.name }}</option>
-                </select>
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>ktp</span>
-              <div>
-                <input @change="fileKtp" type="file">
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
-            <div class="form-group">
-              <span>rekening</span>
-              <div>
-                <input @change="fileRekening" type="file">
-                <q-field class="field-input" :error="false" error-label="error this" />
-              </div>
-            </div>
+            <forminput
+              v-if="!loading_customer"
+              label="Name"
+              placeholder="Nama"
+              error=""
+              v-model="customer.name"
+            />
+            <forminput
+              v-if="!loading_customer"
+              label="Address"
+              type="textarea"
+              error=""
+              v-model="customer.address"
+            />
+            <form-birth-date
+              v-model="customer.birth_date"
+              v-if="!loading_customer"/>
+            <forminput
+              v-if="!loading_customer"
+              label="Phone"
+              type="number"
+              v-model="customer.phone"
+              error=""
+            />
+            <forminput
+              v-if="!loading_customer"
+              label="Email"
+              type="email"
+              v-model="customer.email"
+              error=""
+            />
+            <forminput
+              v-if="!loading_customer"
+              label="NPWP"
+              v-model="customer.npwp"
+              error=""
+            />
+            <forminput
+              v-if="!loading_customer"
+              label="Rek Number"
+              v-model="customer.rekening_number"
+              error=""
+            />
+            <FormInit
+              v-if="!loading_customer"
+              label="Religion"
+              :value="customer.id_religion"
+              url="/religion"/>
+            <FormInit
+              v-if="!loading_customer"
+              label="Nationality"
+              :value="customer.id_nationality"
+              url="/nationality"/>
+            <FormInit
+              v-if="!loading_customer"
+              label="Sex"
+              :value="customer.id_sex"
+              url="/sex"/>
+            <form-upload-img
+              v-model="customer.ktp"
+              label="KTP"
+              v-if="!loading_customer"/>
+            <form-upload-img
+              v-model="customer.rekening"
+              label="Rekening"
+              v-if="!loading_customer"/>
             <div style="margin-top: 8px; text-align: center">
-              <q-btn style="margin-right: 8px" color="primary" label="update" @click.native="updateCustomer" :loading="false" />
-              <q-btn color="secondary" label="batal" :loading="false" @click="$router.back()" />
+              <q-btn style="margin-right: 8px" color="primary" label="update" @click.native="updateCustomer" :loading="loading_customer" />
+              <q-btn color="secondary" label="batal" @click="$router.back()" />
             </div>
+            <q-inner-loading :visible="loading_customer">
+              <q-spinner color="secondary" :size="60" />
+            </q-inner-loading>
           </q-card-main>
         </q-card>
       </div>
 
       <div class="col-lg-5 col-xs-12">
-        <q-card>
+        <q-card class="relative-position">
           <q-card-title>
             List Package
+            <q-btn round dense size="sm" color="primary" icon="add" class="q-ml-xs"/>
+            <div slot="right">
+              <div class="row">
+                <q-select
+                  v-model="filter_package"
+                 :options="filter_package_options"
+                 class="q-mr-md"
+                />
+              </div>
+            </div>
           </q-card-title>
           <q-card-main>
             <q-list no-border separator>
-              <q-item v-for="v of listPackage" v-bind:key="v.id">
+              <q-item v-for="v of listPackage" v-bind:key="v.id" style="align-items:normal">
                 <q-item-side>
                   <q-icon name="assignment"/>
                 </q-item-side>
-                <q-item-main :label="v.title" />
+                <q-item-main>
+                  <q-item-tile label>{{v.product_name}}</q-item-tile>
+                  <q-item-tile sublabel>Rp {{v.nominal}}</q-item-tile>
+                </q-item-main>
                 <q-item-side right>
                   <span class="q-mr-xl">{{v.status}}</span>
                   <q-btn size="sm" round dense color="primary" icon="create">
@@ -153,8 +145,36 @@
                 <span style="color:grey">Belum ada data</span>
               </q-item>
             </q-list>
+            <div v-if="listPackage.length > 0">
+              <div class="row justify-center">
+                <!-- <div style="margin: 5px 16px;">
+                  Data per halaman
+                </div>
+                <q-select
+                  v-model="page.rowsPerPage"
+                 :options="rowsPerPage"
+                 style="margin-right: 16px;height: 28px;font-size: 14px;"
+                 @input="fetchData"/> -->
+                <q-btn
+                  color="grey"
+                  :disable="packagePagination.current_page == 1"
+                  round
+                  icon="keyboard_arrow_left"
+                  style="margin-right: 16px; font-size: 10px"
+                  @click="prev_package"/>
+                <q-btn
+                  color="grey"
+                  :disable="packagePagination.is_last == 1"
+                  round
+                  icon="keyboard_arrow_right"
+                  style="font-size:10px"
+                  @click="next_package"/>
+              </div>
+            </div>
           </q-card-main>
-
+          <q-inner-loading :visible="loading_package">
+            <q-spinner color="secondary" :size="60" />
+          </q-inner-loading>
         </q-card>
       </div>
 
@@ -187,7 +207,18 @@
 </template>
 
 <script>
+import forminput from 'components/FormInput.vue'
+import FormInit from 'components/FormInit.vue'
+import FormBirthDate from 'components/FormBirthDate.vue'
+import FormUploadIMG from 'components/FormUploadPhoto.vue'
+
 export default {
+  components: {
+    forminput,
+    FormInit,
+    'form-birth-date': FormBirthDate,
+    'form-upload-img': FormUploadIMG
+  },
   data () {
     return {
       customer: {
@@ -210,54 +241,77 @@ export default {
       selectedCustomerPackage: {},
       optionPackage: [],
       listPackage: [],
+      packagePagination: {
+        current_data: 0,
+        current_page: 1,
+        is_last: 1,
+        limit: 5,
+        offset: 0
+      },
       sexOpstions: [],
       religionOpstions: [],
       nationalityOpstions: [],
       selectedData: {},
       modalApprove: false,
       modalReject: false,
-      searchMember: false
+      searchMember: false,
+      loading_customer: false,
+      loading_package: false,
+      filter_package: 0,
+      filter_package_options: [
+        {
+          label: 'All',
+          value: 0
+        },
+        {
+          label: 'Insurance',
+          value: 1
+        },
+        {
+          label: 'Investment',
+          value: 2
+        }
+      ]
     }
   },
   created () {
-    this.$axios.get('/admin/customer/package?id_customer=' + this.$route.params.id, {
-      headers: {
-        'Authorization': JSON.parse(localStorage.getItem('authorization'))
-      }
-    }).then(res => {
-      this.listPackage = res.data.data
-    })
-    this.$axios.get('/admin/customer?id=' + this.$route.params.id, {
-      headers: {
-        'Authorization': JSON.parse(localStorage.getItem('authorization'))
-      }
-    }).then(res => {
-      this.customer = res.data.data[0]
-    })
-    this.$axios.get('/religion', {
-      headers: {
-        'Authorization': JSON.parse(localStorage.getItem('authorization'))
-      }
-    }).then(res => {
-      this.religionOpstions = res.data.data
-    })
-    this.$axios.get('/sex', {
-      headers: {
-        'Authorization': JSON.parse(localStorage.getItem('authorization'))
-      }
-    }).then(res => {
-      console.log(res.data.data)
-      this.sexOpstions = res.data.data
-    })
-    this.$axios.get('/nationality', {
-      headers: {
-        'Authorization': JSON.parse(localStorage.getItem('authorization'))
-      }
-    }).then(res => {
-      this.nationalityOpstions = res.data.data
-    })
+    this.getDetailCustomer()
   },
   methods: {
+    getDetailCustomer () {
+      this.loading_customer = true
+      this.$axios.get('/admin/customer?id=' + this.$route.params.id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        this.customer = res.data.data[0]
+        this.loading_customer = false
+        this.getListPackage()
+      }).catch(error => {
+        this.loading_customer = false
+        console.log(error)
+      })
+    },
+    getListPackage () {
+      this.loading_package = true
+      this.$axios.get('/admin/customer/package', {
+        params: {
+          id_customer: this.$route.params.id,
+          page: this.packagePagination.current_page
+        },
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('authorization'))
+        }
+      }).then(res => {
+        this.listPackage = res.data.data
+        this.packagePagination = res.data.pagination
+        this.loading_package = false
+      }).catch(error => {
+        this.loading_package = false
+        console.log(error)
+      })
+    },
     setStatus (id, status) {
       if (status === 'approve') {
         if (!this.approveIdPackage) {
@@ -284,8 +338,7 @@ export default {
           // Available values: 'positive', 'negative', 'warning', 'info'
           color: 'positive'
         })
-        this.loading = false
-        this.fetchData()
+        // this.loading = false
       }).catch(error => {
         this.$q.notify({
           message: error.response.data.message,
@@ -293,11 +346,10 @@ export default {
           // Available values: 'positive', 'negative', 'warning', 'info'
           color: 'negative'
         })
-        this.loading = false
+        // this.loading = false
       })
     },
     openModal (row, modal) {
-      console.log(row)
       if (modal === 'modalApprove') {
         this.modalApprove = true
         this.$axios.get('/admin/package?id_product=' + row.id_product, {
@@ -331,6 +383,14 @@ export default {
       }).then(res => {
         console.log(res)
       })
+    },
+    prev_package () {
+      this.packagePagination.current_page--
+      this.getListPackage()
+    },
+    next_package () {
+      this.packagePagination.current_page++
+      this.getListPackage()
     }
   }
 }

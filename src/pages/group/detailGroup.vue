@@ -5,25 +5,21 @@
       <span class="q-ml-sm">Kembali</span>
     </div>
     <div inline class="row">
-      <q-card class="col-lg-6">
+      <q-card class="col-lg-6 q-mb-md">
         <q-card-title>
           Detail Group
         </q-card-title>
         <q-card-main>
-          <div class="form-group">
-            <span>Name</span>
-            <div>
-              <input placeholder="Nama Grup"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
-            </div>
-          </div>
-          <div class="form-group">
-            <span>Team Leader</span>
-            <div>
-              <input placeholder="Cari Nama Agen"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
-            </div>
-          </div>
+          <forminput
+            label="Name"
+            placeholder="Nama Grup"
+            error=""
+          />
+          <forminput
+            label="Team Leader"
+            placeholder="Cari Nama Agen"
+            error=""
+          />
           <div class="form-group">
             <span class="list-header">List Member</span>
             <q-btn
@@ -33,13 +29,15 @@
               size="xs"
               @click="addmember"/>
             <div v-if="searchMember" class="search-input">
-              <input placeholder="Cari Nama Agen"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
+              <forminput
+                placeholder="Cari Nama Agen"
+                error=""
+              />
             </div>
           </div>
           <div style="margin-top: 8px; text-align: center">
-            <q-btn style="margin-right: 8px" color="primary" label="update" :loading="false" />
-            <q-btn color="secondary" label="batal" :loading="false" @click="$router.back()" />
+            <q-btn style="margin-right: 8px" color="primary" label="update" :loading="loading" />
+            <q-btn color="secondary" label="batal" @click="$router.back()" />
           </div>
         </q-card-main>
       </q-card>
@@ -112,9 +110,15 @@
 </template>
 
 <script>
+import forminput from 'components/FormInput.vue'
+
 export default {
+  components: {
+    'forminput': forminput
+  },
   data () {
     return {
+      loading: false,
       selectedData: {},
       modalApprove: false,
       modalReject: false,

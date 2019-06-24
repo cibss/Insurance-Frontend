@@ -1,81 +1,191 @@
 <template>
-  <div style="padding: 36px; position:relative">
+  <div style="position:relative">
     <div class="q-mb-md" @click="$router.back()">
       <q-icon name="arrow_back"/>
       <span class="q-ml-sm">Kembali</span>
     </div>
-    <div class="q-headline" style="margin-bottom:15px;">#{{ customerPackage.id }} {{ customerPackage.name }}</div>
-    <q-card>
-    <div class="product-data">
-      <p>Expired ContractedDate</p>
-      <input v-model="customerPackage.expired_at" type="date" />
+    <div inline class="row">
+      <div class="col-lg-4 col-xs-12 q-mr-md q-mb-md">
+        <q-card class="relative-position">
+          <q-card-title>
+            Detail Customer Product
+            <span slot="subtitle">
+              {{ customerPackage.customer_name }} / {{customerPackage.product_type == 1?'Insurance':'Investment'}} / {{customerPackage.product_name}}
+            </span>
+          </q-card-title>
+          <q-card-main>
+            <forminput
+              v-if="!loading"
+              label="Expired Contracted Date"
+              type="date"
+              error=""
+              v-model="customerPackage.expired_at"
+            />
+            <forminput
+              v-if="!loading"
+              label="No SPAJ"
+              error=""
+              v-model="customerPackage.spaj"
+            />
+            <forminput
+              v-if="!loading"
+              label="No Polis"
+              error=""
+              v-model="customerPackage.polis"
+            />
+            <forminput
+              v-if="!loading"
+              label="Tanggal Masuk"
+              type="date"
+              error=""
+              v-model="customerPackage.approved_at"
+            />
+            <forminput
+              v-if="!loading"
+              label="Tanggal Submit"
+              type="date"
+              error=""
+              v-model="customerPackage.created_at"
+            />
+            <forminput
+              v-if="!loading"
+              label="Payment Due Date"
+              type="date"
+              error=""
+              v-model="customerPackage.payment_due_at"
+            />
+            <forminput
+              v-if="!loading"
+              label="Nominal"
+              type="number"
+              error=""
+              v-model="customerPackage.nominal"
+            />
+            <forminput
+              v-if="!loading"
+              label="MGI"
+              type="number"
+              error=""
+              v-model="customerPackage.mgi"
+            />
+            <forminput
+              v-if="!loading"
+              label="FYP"
+              type="number"
+              error=""
+              v-model="customerPackage.fyp"
+            />
+            <div class="form-group">
+              <span>Tenor</span>
+              <div>
+                <select v-model="customerPackage.tenor">
+                  <option value="3">3</option>
+                  <option value="6">6</option>
+                  <option value="12">12</option>
+                  <option value="24">24</option>
+                </select>
+              </div>
+            </div>
+            <forminput
+              v-if="!loading"
+              label="Rate"
+              type="number"
+              error=""
+              v-model="customerPackage.rate"
+            />
+            <div class="form-group">
+              <span>Status</span>
+              <select>
+                <option :selected="customerPackage.status == v.id" v-for="v of optionStatus" v-bind:key="v.id">{{ v.status }}</option>
+              </select>
+            </div>
+            <div class="btn-confirm" style="padding-bottom:20px;">
+              <q-btn color="primary" v-close-overlay @click.native="submitcustomerPackage" label="update" />
+              <q-btn color="secondary" v-close-overlay label="cancel" @click="$router.back()"/>
+            </div>
+          </q-card-main>
+
+          <q-inner-loading :visible="loading">
+            <q-spinner color="secondary" :size="60" />
+          </q-inner-loading>
+        </q-card>
+      </div>
+      <div class="col-lg-4 col-xs-12">
+        <q-card class="relative-position q-mb-md">
+          <q-card-title>
+            Tertanggung
+            <q-btn round dense size="sm" color="primary" icon="add" class="q-ml-xs"/>
+          </q-card-title>
+          <q-card-main>
+            <q-list no-border separator>
+              <q-item>
+                <q-item-side>
+                  <q-icon name="person"/>
+                </q-item-side>
+                <q-item-main label="Eka" />
+                <q-item-side right>
+                  <q-btn size="sm" round dense color="primary" icon="create">
+                    <q-popover anchor="bottom right" self="top right">
+                      <q-list separator link>
+                        <q-item v-close-overlay >
+                          <q-item-side>
+                            <q-icon name="create"/>
+                          </q-item-side>
+                          <q-item-main label="Detail" />
+                        </q-item>
+                        <q-item v-close-overlay >
+                          <q-item-side>
+                            <q-icon name="delete"/>
+                          </q-item-side>
+                          <q-item-main label="Delete" />
+                        </q-item>
+                      </q-list>
+                    </q-popover>
+                  </q-btn>
+                </q-item-side>
+              </q-item>
+            </q-list>
+          </q-card-main>
+        </q-card>
+        <q-card class="relative-position q-md-md">
+          <q-card-title>
+            Ahli Waris
+            <q-btn round dense size="sm" color="primary" icon="add" class="q-ml-xs"/>
+          </q-card-title>
+          <q-card-main>
+            <q-list no-border separator>
+              <q-item>
+                <q-item-side>
+                  <q-icon name="assignment"/>
+                </q-item-side>
+                <q-item-main label="Eka" />
+                <q-item-side right>
+                  <span class="q-mr-xl">Adik</span>
+                  <q-btn size="sm" round dense color="primary" icon="create">
+                    <q-popover anchor="bottom right" self="top right">
+                      <q-list separator link>
+                        <q-item v-close-overlay >
+                          <q-item-side>
+                            <q-icon name="create"/>
+                          </q-item-side>
+                          <q-item-main label="Detail" />
+                        </q-item>
+                        <q-item v-close-overlay >
+                          <q-item-side>
+                            <q-icon name="delete"/>
+                          </q-item-side>
+                          <q-item-main label="Delete" />
+                        </q-item>
+                      </q-list>
+                    </q-popover>
+                  </q-btn>
+                </q-item-side>
+              </q-item>
+            </q-list>
+          </q-card-main>
+        </q-card>
+      </div>
     </div>
-    <div class="product-data">
-      <p>No SPAJ</p>
-      <input v-model="customerPackage.spaj" />
-    </div>
-    <div class="product-data">
-      <p>No. Polis</p>
-      <input v-model="customerPackage.polis" />
-    </div>
-    <div class="product-data">
-      <p>Tanggal Masuk</p>
-      <p class="bold">{{ this.$pl.dateFormat(customerPackage.approved_at) }}</p>
-    </div>
-    <div class="product-data">
-      <p>Tanggal Submit</p>
-      <p class="bold">{{ this.$pl.dateFormat(customerPackage.created_at) }}</p>
-    </div>
-    <div class="product-data">
-      <p>PaymentDueDate</p>
-      <input v-model="customerPackage.payment_due_at" type="date" />
-    </div>
-    <!-- <div class="product-data">
-      <p>Tanggal Pencairan Dana</p>
-      <p class="bold">05/08/2018</p>
-    </div>
-    <div class="product-data">
-      <p>Jumlah Dana Dicairkan</p>
-      <p class="bold">200.000.000</p>
-    </div> !-->
-    <div class="product-data">
-      <p>Nominal</p>
-      <input v-model="customerPackage.nominal" type="number" />
-    </div>
-    <div class="product-data">
-      <p>MGI</p>
-      <input v-model="customerPackage.mgi" type="number"/>
-    </div>
-    <div class="product-data">
-      <p>FYP</p>
-      <input v-model="customerPackage.fyp" type="number" />
-    </div>
-    <div class="product-data">
-      <p>Rate</p>
-      <input v-model="customerPackage.rate" type="number" />
-    </div>
-    <div class="product-data">
-      <p>Tenor</p>
-      <input v-model="customerPackage.tenor" type="number" />
-    </div>
-    <div class="product-data">
-      <p>Form</p>
-      <a :href=" customerPackage.form != null ? customerPackage.form.url : '' " target="_blank">
-        <p class="bold">{{ customerPackage.form != null ? customerPackage.form.filename : '' }}</p>
-      </a>
-      <input @change="onformSelected" type="file">
-    </div>
-    <div class="product-data">
-      <p>Status</p>
-      <select>
-        <option :selected="customerPackage.status == v.id" v-for="v of optionStatus" v-bind:key="v.id">{{ v.status }}</option>
-      </select>
-    </div>
-    <div class="btn-confirm" style="padding-bottom:20px;">
-      <q-btn color="primary" v-close-overlay @click.native="submitcustomerPackage" label="submit" />
-      <q-btn color="secondary" v-close-overlay label="Close" />
-    </div>
-    </q-card>
   </div>
 
 </template>
@@ -102,7 +212,12 @@
 </style>
 
 <script>
+import forminput from 'components/FormInput.vue'
+
 export default {
+  components: {
+    forminput
+  },
   data () {
     return {
       customerPackage: {},
@@ -235,7 +350,12 @@ export default {
           res.data.data[0].payment_due_at = this.$pl.dateFormat(res.data.data[0].payment_due_at)
         }
         this.customerPackage = res.data.data[0]
+        this.loading = false
       })
+        .catch(error => {
+          this.loading = false
+          console.log(error)
+        })
     },
     openURL (url) {
       window.open(url)

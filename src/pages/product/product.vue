@@ -1,22 +1,20 @@
 <template>
   <div inline class="w-full">
+    <q-card-title >
       Daftar Produk
-    <q-card-title>
-      <div class="row" >
-        <div
-           style="margin-right: 16px"
-        >
-          <input v-model="search" placeholde="search">
-        </div>
-        <q-btn
-        icon="search" @click="searchClick" />
-      </div>
       <div slot="right">
         <div class="row">
+          <q-search
+            v-model="search"
+            :debounce="600"
+            icon="search"
+            class="q-mr-md"
+            v-on:input="searchClick"
+          />
           <q-select
             v-model="select_type"
            :options="selectOptions"
-           style="margin-right: 16px"
+           class="q-mr-md"
            @input="fetchData"
           />
           <q-btn color="primary" label="Tambah Produk Baru" @click="$router.push('/product/new')"/>
@@ -69,7 +67,7 @@
                   </q-item>
                   <q-item @click.native="$router.push('/product/'+props.row.id+'/package')">
                     <q-item-side>
-                      <q-icon name="create"/>
+                      <q-icon name="add_circle"/>
                     </q-item-side>
                     <q-item-main label="Add Package" />
                   </q-item>
@@ -263,6 +261,7 @@ export default {
   },
   methods: {
     searchClick () {
+      console.log(this.search)
       this.fetchData()
     },
     openModal (props) {

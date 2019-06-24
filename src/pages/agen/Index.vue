@@ -1,22 +1,20 @@
 <template>
   <div inline class="w-full">
+    <q-card-title >
       Daftar Agen
-    <q-card-title>
-      <div class="row" >
-        <div
-            style="margin-right: 16px"
-          >
-          <input v-model="search" placeholde="search">
-        </div>
-        <q-btn
-        icon="search" @click="searchClick" />
-      </div>
       <div slot="right">
         <div class="row">
+          <q-search
+            v-model="search"
+            :debounce="600"
+            icon="search"
+            class="q-mr-md"
+            v-on:input="searchClick"
+          />
           <q-select
             v-model="select"
            :options="selectOptions"
-           style="margin-right: 16px"
+           class="q-mr-md"
            @input="fetchData"
           />
           <q-btn color="primary" label="Tambah Agen Baru" @click="$router.push('/agen/new')"/>
@@ -285,7 +283,6 @@ export default {
           'Authorization': JSON.parse(localStorage.getItem('authorization'))
         }
       }).then(res => {
-        console.log(res.data.data)
         if (res.data.success) {
           this.tableData = res.data.data
           if (res.data.pagination.is_last === 1) {

@@ -1,26 +1,23 @@
 <template>
   <div inline class="w-full">
+    <q-card-title >
       Daftar Group
-    <q-card-title>
-      <div class="row" >
-          <div
-            style="margin-right: 16px"
-          >
-          <input v-model="search" placeholde="search">
-        </div>
-        <q-btn
-        icon="search" @click="searchClick" />
-      </div>
       <div slot="right">
         <div class="row">
+          <q-search
+            v-model="search"
+            :debounce="600"
+            icon="search"
+            class="q-mr-md"
+            v-on:input="searchClick"
+          />
           <q-select
             v-model="select"
            :options="selectOptions"
-           style="margin-right: 16px"
+           class="q-mr-md"
            @input="fetchData"
           />
           <q-btn color="primary" label="Tambah Group Baru" @click="$router.push('/group/new')"/>
-          <!-- <q-btn color="primary" label="Export Data" @click="exportGroup"/> -->
         </div>
       </div>
     </q-card-title>

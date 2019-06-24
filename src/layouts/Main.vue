@@ -58,12 +58,12 @@
       </q-item>
       <q-item to="/group">
         <q-item-side icon="public" class="sidebar-icon" />
-        <q-item-main label="Group" />
+        <q-item-main label="Group Chat" />
       </q-item>
-      <q-item to="/chat">
+      <!-- <q-item to="/chat">
         <q-item-side icon="chat" class="sidebar-icon" />
         <q-item-main label="Chat" />
-      </q-item>
+      </q-item> -->
       <q-item to="/setting">
         <q-item-side icon="settings" class="sidebar-icon" />
         <q-item-main label="Setting" />

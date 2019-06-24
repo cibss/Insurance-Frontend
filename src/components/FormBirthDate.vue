@@ -1,5 +1,5 @@
 <template>
-  <div class="form-group">
+  <div class="form-group q-pb-sm">
     <div style="width:60%; display:inline-block;">
       <span style="display:block;">Date Of Birth</span>
       <input
@@ -16,13 +16,17 @@
         v-model="age"
         placeholder="27" />
     </div>
-    <q-field class="field-input" :error="false" error-label="error this" />
+    <q-field
+      class="field-input"
+      v-if="error != ''"
+      :error="true"
+      :error-label="error" />
   </div>
 </template>
 
 <script>
 export default {
-  props: ['value'],
+  props: ['value', 'error'],
   data () {
     return {
       birth_date: '',
