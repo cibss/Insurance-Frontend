@@ -38,7 +38,7 @@ export default {
       this.$emit('input', val)
     }
   },
-  mounted () {
+  created () {
     if (this.value != null && this.value !== '') {
       this.$data.birth_date = this.value
       this.birthDateChange()

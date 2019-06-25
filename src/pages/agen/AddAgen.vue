@@ -5,7 +5,7 @@
       <span class="q-ml-sm">Kembali</span>
     </div>
     <div inline class="row">
-      <q-card class="col-lg-6">
+      <q-card class="col-lg-5 col-xs-12">
         <q-card-title>
           Tambah Agen Privilege Club
         </q-card-title>
@@ -46,14 +46,9 @@
               <q-field class="field-input" :error="false" error-label="error this"/>
             </div>
           </div>
-          <div class="form-group">
-            <span>Birth Date</span>
-            <div>
-              <input type="date" style="width:80%;" v-model="agen.birth_date"/>
-              <q-icon name="date_range" style="font-size:22px; margin-bottom:2px; margin-left:3px; color:goldenrod;"/>
-              <q-field class="field-input" :error="false" error-label="error this" />
-            </div>
-          </div>
+          <form-birth-date
+            v-model="agen.birth_date"
+            v-if="!loading"/>
           <div class="form-group">
             <span>Email</span>
             <div>
@@ -86,7 +81,12 @@
 </template>
 
 <script>
+import FormBirthDate from 'components/FormBirthDate.vue'
+
 export default {
+  components: {
+    'form-birth-date': FormBirthDate
+  },
   data () {
     return {
       agen: {

@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ['label', 'value', 'error', 'placeholder', 'type', 'select_options'],
+  props: ['label', 'value', 'error', 'placeholder', 'type'],
   watch: {
     input (val) {
       this.$emit('input', val)
@@ -37,7 +37,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.select_options)
     if (this.value != null && this.value !== '') {
       this.$data.input = this.value
     }

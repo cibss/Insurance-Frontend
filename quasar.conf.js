@@ -49,6 +49,7 @@ module.exports = function (ctx) {
         'QCheckbox',
         'QChip',
         'QDialog',
+        'QDatetime',
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',

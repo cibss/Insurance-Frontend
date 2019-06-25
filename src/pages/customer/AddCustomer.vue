@@ -5,7 +5,7 @@
       <span class="q-ml-sm">Kembali</span>
     </div>
     <div inline class="row">
-      <q-card class="col-lg-6">
+      <q-card class="col-lg-5 col-xs-12">
         <q-card-title>
           Tambah Nasabah
         </q-card-title>
