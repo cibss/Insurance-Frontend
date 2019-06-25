@@ -80,26 +80,23 @@
           </q-card-title>
           <q-card-main>
             <q-list no-border separator>
-              <q-item>
+              <q-item v-if="direct_leader.hasOwnProperty('first_name')">
                 <q-item-main>
-                  <q-item-tile label>{{ team.team_direct_leader.first_name }}</q-item-tile>
+                  <q-item-tile label>{{ direct_leader.first_name }}</q-item-tile>
                   <q-item-tile sublabel>Direct Leader</q-item-tile>
                 </q-item-main>
               </q-item>
-              <q-item v-for="v of team.team_leaders " v-bind:key="v.id">
+              <q-item v-for="v of team_leaders " v-bind:key="v.id">
                 <q-item-main>
                   <q-item-tile label>{{ v.first_name }}</q-item-tile>
                   <q-item-tile sublabel>Leader</q-item-tile>
                 </q-item-main>
               </q-item>
-              <q-item v-for="v of team.team_members " v-bind:key="v.id">
+              <q-item v-for="v of team_members " v-bind:key="v.id">
                 <q-item-main>
                   <q-item-tile label>{{ v.first_name }}</q-item-tile>
                   <q-item-tile sublabel>Member</q-item-tile>
                 </q-item-main>
-              </q-item>
-              <q-item v-if="team.length == 0">
-                <span style="color:grey">Belum ada data</span>
               </q-item>
             </q-list>
           </q-card-main>
@@ -125,7 +122,9 @@ export default {
     return {
       loading: false,
       agent: {},
-      team: {}
+      direct_leader: {},
+      team_leaders: [],
+      team_members: []
     }
   },
   mounted () {
@@ -161,6 +160,15 @@ export default {
       this.$axios.get('/team?id_user=' + this.$route.params.id, {
       }).then(res => {
         let data = res.data.data
+        if (data.hasOwnProperty('team_direct_leader')) {
+          this.$data.direct_leader = data.team_direct_leader
+        }
+        if (data.team_leaders.length !== 0) {
+          this.$data.team_leaders = data.team_leaders
+        }
+        if (data.team_members.length !== 0) {
+          this.$data.team_members = data.team_members
+        }
         console.log(data)
         this.team = data
       })
