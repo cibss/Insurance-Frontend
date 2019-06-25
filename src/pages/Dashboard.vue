@@ -1,12 +1,12 @@
 <template>
   <div inline class="w-full">
     <q-card-title >
-      Dashboard
-      <span slot="subtitle">
+      Dashboard (on progress)
+      <!-- <span slot="subtitle">
         Welcome {{user.Username}}
-      </span>
+      </span> -->
     </q-card-title >
-    <q-card-main>
+    <!-- <q-card-main>
       <div class="row">
         <q-card class="col-lg-3 col-xs-12 q-mr-md q-mb-md">
           <q-card-title >
@@ -47,7 +47,7 @@
           </q-card-title >
         </q-card>
       </div>
-    </q-card-main>
+    </q-card-main> -->
   </div>
 </template>
 
