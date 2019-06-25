@@ -7,14 +7,14 @@
     <div inline class="row">
       <q-card class="col-lg-5 col-xs-12">
         <q-card-title>
-          Tambah Nasabah
+          Tambah Nasabah (on progress)
         </q-card-title>
-        <q-card-main>
+        <!-- <q-card-main>
           <div class="btn-confirm">
             <q-btn color="primary" v-close-overlay label="Submit" />
             <q-btn color="secondary" v-close-overlay label="cancel" @click="$router.back()"/>
           </div>
-        </q-card-main>
+        </q-card-main> -->
       </q-card>
     </div>
   </div>
